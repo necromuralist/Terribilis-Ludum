@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Terribilus Ludum (Posts about puzzles)</title><link>https://necromuralist.github.io/Terribilus-Ludum/</link><description></description><atom:link href="https://necromuralist.github.io/Terribilus-Ludum/categories/puzzles.xml" rel="self" type="application/rss+xml"></atom:link><language>en</language><copyright>Contents © 2023 &lt;a href="mailto:cloisteredmonkey.jmark@slmail.me"&gt;The Cloistered Monkey&lt;/a&gt; 
+&lt;div id="license" xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/"&gt;&lt;span property="dct:title"&gt;Terribilus Ludum&lt;/span&gt; is licensed under
+&lt;a href="http://creativecommons.org/licenses/by-sa/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"&gt;CC BY-SA 4.0
+&lt;img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"&gt;
+&lt;img src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"&gt;
+&lt;img src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1"&gt;&lt;/a&gt;&lt;/p&gt; 
+</copyright><lastBuildDate>Thu, 05 Oct 2023 02:33:40 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Code Puzzle Sites</title><link>https://necromuralist.github.io/Terribilus-Ludum/posts/code-puzzle-sites/index.html</link><dc:creator>The Cloistered Monkey</dc:creator><description>&lt;ul class="org-ul"&gt;
+&lt;li&gt;&lt;a href="https://www.codechef.com/"&gt;Code Chef&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://leetcode.com/problemset/all/"&gt;Leet Code&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://edabit.com/challenges#!"&gt;edabit&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://coderbyte.com/developers"&gt;CoderByte&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.codewars.com/"&gt;Code Wars&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.codingame.com/start/"&gt;Codingame&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://app.geektastic.com/"&gt;Geektastic&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.hackerrank.com/"&gt;Hacker Rank&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://projecteuler.net/"&gt;Project Euler&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.spoj.com/"&gt;Spherical Online Judge&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.topcoder.com/"&gt;Top Coder&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description><category>puzzles</category><category>sites</category><guid>https://necromuralist.github.io/Terribilus-Ludum/posts/code-puzzle-sites/index.html</guid><pubDate>Thu, 05 Oct 2023 02:23:35 GMT</pubDate></item></channel></rss>
