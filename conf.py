@@ -17,10 +17,10 @@ import time
 
 # Data about this site
 BLOG_AUTHOR = "The Cloistered Monkey"  # (translatable)
-BLOG_TITLE = "Terribilus Ludum"  # (translatable)
+BLOG_TITLE = "Terribilis Ludum"  # (translatable)
 # This is the main URL for your site. It will be used
 # in a prominent link. Don't forget the protocol (http/https)!
-SITE_URL = "https://necromuralist.github.io/Terribilus-Ludum/"
+SITE_URL = "https://necromuralist.github.io/Terribilis-Ludum/"
 # This is the URL where Nikola's output will be deployed.
 # If not set, defaults to SITE_URL
 # BASE_URL = "https://necromuralist.github.io/"
@@ -936,7 +936,7 @@ FEED_LINKS_APPEND_QUERY = False
 # (translatable)
 
 LICENSE = '''
-<div id="license" xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/"><span property="dct:title">Terribilus Ludum</span> is licensed under
+<div id="license" xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/"><span property="dct:title">Terribilis Ludum</span> is licensed under
 <a href="http://creativecommons.org/licenses/by-sa/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY-SA 4.0
 <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1">
 <img src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1">
