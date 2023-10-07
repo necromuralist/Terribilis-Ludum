@@ -1,0 +1,16 @@
+#+BEGIN_COMMENT
+.. title: LeetCode: Majority Item
+.. slug: leetcode-majority-item
+.. date: 2023-10-06 18:06:58 UTC-05:00
+.. tags: 
+.. category: 
+.. link: 
+.. description: 
+.. type: text
+.. status: 
+.. updated: 
+
+#+END_COMMENT
+
+
+Write your post here.
