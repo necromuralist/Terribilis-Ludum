@@ -1,16 +1,349 @@
 #+BEGIN_COMMENT
-.. title: LeetCode: Majority Item
+.. title: LeetCode: Majority Item II
 .. slug: leetcode-majority-item
 .. date: 2023-10-06 18:06:58 UTC-05:00
-.. tags: 
-.. category: 
+.. tags: leetcode,practice
+.. category: Practice
 .. link: 
-.. description: 
+.. description: The "Majority Item II" problem from LeetCode.
 .. type: text
 .. status: 
 .. updated: 
-
+.. has_math: true
 #+END_COMMENT
+#+OPTIONS: ^:{}
+#+TOC: headlines 2
+#+PROPERTY: header-args :session ~/.local/share/jupyter/runtime/kernel-911eb1b0-781d-491b-8a91-28d811769b93.json
 
+#+BEGIN_SRC python :results none :exports none
+%load_ext autoreload
+%autoreload 2
+#+END_SRC
+* The Problem
+ - **Given:** An integer array of size /n/.
+ - **Find:** All elements that appear more than $\frac{n}{3}$ times.
 
-Write your post here.
+**Constraints:**
+
+\[
+1 \leq nums.length \leq 5 \times 10^4 \\
+-10^9 \leq nums[i] \leq 10^9
+\]
+
+** Python
+
+1. Find $\frac{n}{3}$
+2. Count all the element frequencies
+3. Build a list of all the elemennts that occur frequently enough
+
+*** The Examples
+
+These are the examples given with the problem.
+
+#+begin_src python :results none
+def frequency_floor(source: list) -> None:
+    """print the n/3 for the source
+
+    Args:
+     source: collection with a length
+    """
+    print("n/3: {0: 2}".format(len(source)/3))
+    return
+#+end_src
+
+**** Example One
+
+#+begin_src python :results output :exports both
+input_1 = [3, 2, 3]
+expected_1 = [3]
+
+frequency_floor(input_1)
+#+end_src
+
+#+RESULTS:
+: n/3:  1.0
+
+**** Example Two
+
+#+begin_src python :results output :exports both
+input_2 = [1]
+expected_2 = [1]
+
+frequency_floor(input_2)
+#+end_src
+
+#+RESULTS:
+: n/3:  0.3333333333333333
+
+**** Example Three
+
+#+begin_src python :results output :exports both
+input_3 = [1, 2]
+expected_3 = [1, 2]
+
+frequency_floor(input_3)
+#+end_src
+
+#+RESULTS:
+: n/3:  0.6666666666666666
+
+It looks like they don't expect you to use rounding.
+
+**** Collected
+
+#+begin_src python :results none
+EXAMPLES = [(input_1, expected_1), (input_2, expected_2),
+            (input_3, expected_3)]
+#+end_src
+*** Using Counter
+
+#+begin_src python :results none
+# python
+from collections import Counter
+from random import randint
+from timeit import timeit
+
+# pypi
+from expects import contain_only, expect
+from numba import njit
+#+end_src
+
+#+begin_src python :results none
+def using_counter(source: list, expected) -> list:
+    """gets the output for the source
+
+    Args:
+     source: collection to filter
+     expected: the expected output
+
+    Returns:
+     items in source that occur more than n/3 times
+    """
+    counts = Counter(source)
+    lower_bound = len(source)/3
+    output = [key for key, value in counts.items() if value > lower_bound]
+    expect(output).to(contain_only(*expected))
+    return output
+#+end_src
+
+**** Example 1
+#+begin_src python :results output :exports both
+print(using_counter(input_1, expected_1))
+#+end_src
+
+#+RESULTS:
+: [3]
+
+**** Example 2
+
+#+begin_src python :results output :exports both
+print(using_counter(input_2, expected_2))
+#+end_src
+
+#+RESULTS:
+: [1]
+
+**** Example 3
+
+#+begin_src python :results output :exports both
+print(using_counter(input_3, expected_3))
+#+end_src
+
+#+RESULTS:
+: [1, 2]
+
+**** Timeit
+
+#+begin_src python :results none
+def unexpected_counter(source: list) -> None:
+   counts = Counter(source)
+   lower_bound = len(source)/3
+   output = [key for key, value in counts.items() if value > lower_bound]
+   return output
+
+for source, expected in EXAMPLES:
+   expect(unexpected_counter(source)).to(contain_only(*expected))
+#+end_src
+
+#+begin_src python :results none
+LIMIT = 10**9
+BIG_INPUT = [randint(-LIMIT, LIMIT) for item in range(10**2)]
+#+end_src
+
+#+begin_src python :results output :exports both
+counter_time = timeit("unexpected_counter(BIG_INPUT)", globals=globals())
+print("Time with Counter: {0:.2}".format(counter_time))
+#+end_src
+
+#+RESULTS:
+: Time with Counter: 1.6e+01
+
+#+begin_src python :results output :exports both
+uncounter_time = timeit("""
+counts = Counter(BIG_INPUT)
+lower_bound = len(BIG_INPUT)/3
+output = [key for key, value in counts.items() if value > lower_bound]
+""", globals=globals())
+print("Time with Un-Functioned Counter: {0:.2}".format(uncounter_time))
+#+end_src
+
+#+RESULTS:
+: Time with Un-Functioned Counter: 1.6e+01
+
+#+begin_src python :results output :exports both
+print(counter_time - uncounter_time)
+#+end_src
+
+#+RESULTS:
+: -0.00790674699965166
+
+For some reason the individual lines are slower than the function.
+
+*** Without Imports
+#+begin_src python :results none
+def without_imports(source: list, expected: list) -> list:
+    """filters out items with too few occurrences
+
+    Args:
+     source: collection to filter
+     expected: expected output
+
+    Returns:
+     filtered list
+    """
+    lower_bound = len(source)/3
+    counts = {key: 0 for key in source}
+    for item in source:
+        counts[item] += 1
+
+    output = [item for item, count in counts.items()
+              if count > lower_bound]
+    expect(output).to(contain_only(*expected))
+    return output
+#+end_src
+
+**** Example 1
+#+begin_src python :results output :exports both
+print(without_imports(input_1, expected_1))
+#+end_src
+
+#+RESULTS:
+: [3]
+
+**** Example 2
+#+begin_src python :results output :exports both
+print(without_imports(input_2, expected_2))
+#+end_src
+
+#+RESULTS:
+: [1]
+
+**** Example 3
+#+begin_src python :results output :exports both
+print(without_imports(input_3, expected_3))
+#+end_src
+
+#+RESULTS:
+: [1, 2]
+
+**** Time It
+
+#+begin_src python :results none
+def unexpected(source):
+    lower_bound = len(source)/3
+    counts = {key: 0 for key in source}
+    
+    for item in source:
+        counts[item] += 1
+
+    return [item for item, count in counts.items()
+              if count > lower_bound]
+
+for source, expected in EXAMPLES:
+    expect(unexpected(source)).to(contain_only(*expected))
+#+end_src
+
+#+begin_src python :results output :exports both
+importless_time = timeit("unexpected(BIG_INPUT)", globals=globals())
+print("Time without Counter: {0:.2}".format(importless_time))
+#+end_src
+
+#+RESULTS:
+: Time without Counter: 2.3e+01
+
+#+begin_src python :results output :exports both
+print(counter_time - importless_time)
+#+end_src
+
+#+RESULTS:
+: -7.147983478000242
+
+So the version with the counter was a little faster.
+
+#+begin_src python :results none
+@njit
+def jitspected(source):
+    lower_bound = len(source)/3
+    counts = dict()
+
+    for item in source:
+        counts[item] = 0
+    
+    for item in source:
+        counts[item] += 1
+
+    items = counts.items()
+    return [item for item, count in items
+            if count > lower_bound]
+
+for source, expected in EXAMPLES:
+    expect(jitspected(source)).to(contain_only(*expected))
+#+end_src
+
+#+begin_src python :results output :exports both
+jit_time = timeit("jitspected(BIG_INPUT)", globals=globals())
+print("With numba: {0:0.2}".format(jit_time))
+#+end_src
+
+#+RESULTS:
+: With numba: 2.1e+02
+
+#+begin_src python :results output :exports both
+print(counter_time - jit_time)
+#+end_src
+
+#+RESULTS:
+: -181.21263731
+
+For some reason numba slows it down a lot. Oh, well.
+
+*** Reducing the Counter Lines
+
+#+begin_src python :results output :exports both
+re_uncounter_time = timeit("""
+output = [key for key, value in Counter(BIG_INPUT).items()
+if value > len(BIG_INPUT)/3]
+""", globals=globals())
+print("Time with Un-Rolled-Functioned Counter: {0:.2}".format(re_uncounter_time))
+#+end_src
+
+#+RESULTS:
+: Time with Un-Rolled-Functioned Counter: 2e+01
+
+#+begin_src python :results output :exports both
+print(uncounter_time - re_uncounter_time)
+#+end_src
+
+#+RESULTS:
+: -3.2352328460037825
+
+ The single comprehension is a little slower than the three-lined version.
+
+#+begin_src python :results output :exports both
+print(importless_time - re_uncounter_time)
+#+end_src
+
+#+RESULTS:
+: 2.3669229059960344
+
+It's still faster than using a dict without a counter, though. I guess because the Counter is probably written in C. Kind of feels like cheating to use a counter, though.
