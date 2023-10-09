@@ -19,7 +19,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     screen \
     zile \
     virtualenv && \
-    useradd --create-home --shell /bin/bash bravo && \
+    useradd --create-home --shell /bin/bash terribilis && \
     ln -s /usr/local/bin/pypy3 /usr/local/bin/python
 
 # this requires docker-buildkit to be turned on
@@ -29,8 +29,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 RUN --mount=type=cache,target=/root/.cache \
     pypy3 -m pip install --upgrade pip
 
-# *** setup user bravo *** #
-# switch from root to bravo
+# *** setup user terribilis *** #
+# switch from root to terribilis
 USER terribilis
 WORKDIR /home/terribilis
 
