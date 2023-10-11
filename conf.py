@@ -143,8 +143,9 @@ NAVIGATION_LINKS = {
           (
               ("https://necromuralist.github.io/", "Cloistered Monkey"),
               ("https://necromuralist.github.io/Ape-Iron/", "Ape Iron"),
-              ("https://necromuralist.github.io/Beach-Pig-Thigh/", "Beach Pig Thigh & Rump"),
+              ("https://necromuralist.github.io/Beach-Pig-Thigh/", "Beach Pig Rump & Thigh"),
               ("https://necromuralist.github.io/Bowling-For-Data/", "Bowling For Data"),
+              ("https://necromuralist.github.io/Give-The-Fish/", "Give the Fish"),
               ("https://necromuralist.github.io/Neurotic-Networking/", "Neurotic Networking"),
               ("https://necromuralist.github.io/Visions-Voices-Data/", "Visions, Voices, Data")
           ),
@@ -1375,3 +1376,7 @@ EXTRA_HEAD_DATA = """
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 <link rel="manifest" href="/site.webmanifest">
 """
+
+# add when you get the home Page
+# favicon source: https://en.wikipedia.org/wiki/File:Triple-Spiral-labyrinth-variant.svg?useskin=vector
+# in the public domain

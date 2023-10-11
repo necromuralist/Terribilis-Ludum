@@ -14,7 +14,7 @@
 #+OPTIONS: ^:{}
 #+TOC: headlines 2
 
- - [[https://leetcode.com/problemset/all/][Leet Code]] - problems based on interview questions
+ - [[https://leetcode.com/problemset/all/][Leet Code]] - The problems are based on interview questions.
  - [[https://edabit.com/challenges#!][edabit]]
  - [[https://coderbyte.com/developers][CoderByte]]
  - [[https://www.codewars.com/][Code Wars]]
