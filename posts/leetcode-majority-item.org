@@ -9,11 +9,11 @@
 .. type: text
 .. status: 
 .. updated: 
-.. has_math: true
+.. has_pseudocode: true
 #+END_COMMENT
 #+OPTIONS: ^:{}
 #+TOC: headlines 2
-#+PROPERTY: header-args :session ~/.local/share/jupyter/runtime/kernel-911eb1b0-781d-491b-8a91-28d811769b93.json
+#+PROPERTY: header-args :session ~/.local/share/jupyter/runtime/kernel-352d2996-f830-43d1-8e14-406f25c95e00-ssh.json
 
 #+BEGIN_SRC python :results none :exports none
 %load_ext autoreload
@@ -30,13 +30,13 @@
 -10^9 \leq nums[i] \leq 10^9
 \]
 
-** Python
+* Using Python Collections
 
 1. Find $\frac{n}{3}$
 2. Count all the element frequencies
 3. Build a list of all the elemennts that occur frequently enough
 
-*** The Examples
+** The Examples
 
 These are the examples given with the problem.
 
@@ -51,7 +51,7 @@ def frequency_floor(source: list) -> None:
     return
 #+end_src
 
-**** Example One
+*** Example One
 
 #+begin_src python :results output :exports both
 input_1 = [3, 2, 3]
@@ -63,7 +63,7 @@ frequency_floor(input_1)
 #+RESULTS:
 : n/3:  1.0
 
-**** Example Two
+*** Example Two
 
 #+begin_src python :results output :exports both
 input_2 = [1]
@@ -75,7 +75,7 @@ frequency_floor(input_2)
 #+RESULTS:
 : n/3:  0.3333333333333333
 
-**** Example Three
+*** Example Three
 
 #+begin_src python :results output :exports both
 input_3 = [1, 2]
@@ -89,13 +89,13 @@ frequency_floor(input_3)
 
 It looks like they don't expect you to use rounding.
 
-**** Collected
+*** Collected
 
 #+begin_src python :results none
 EXAMPLES = [(input_1, expected_1), (input_2, expected_2),
             (input_3, expected_3)]
 #+end_src
-*** Using Counter
+** Using Counter
 
 #+begin_src python :results none
 # python
@@ -103,9 +103,10 @@ from collections import Counter
 from random import randint
 from timeit import timeit
 
+import random
+
 # pypi
 from expects import contain_only, expect
-from numba import njit
 #+end_src
 
 #+begin_src python :results none
@@ -126,7 +127,7 @@ def using_counter(source: list, expected) -> list:
     return output
 #+end_src
 
-**** Example 1
+*** Example 1
 #+begin_src python :results output :exports both
 print(using_counter(input_1, expected_1))
 #+end_src
@@ -134,7 +135,7 @@ print(using_counter(input_1, expected_1))
 #+RESULTS:
 : [3]
 
-**** Example 2
+*** Example 2
 
 #+begin_src python :results output :exports both
 print(using_counter(input_2, expected_2))
@@ -143,7 +144,7 @@ print(using_counter(input_2, expected_2))
 #+RESULTS:
 : [1]
 
-**** Example 3
+*** Example 3
 
 #+begin_src python :results output :exports both
 print(using_counter(input_3, expected_3))
@@ -152,7 +153,7 @@ print(using_counter(input_3, expected_3))
 #+RESULTS:
 : [1, 2]
 
-**** Timeit
+*** Timeit
 
 #+begin_src python :results none
 def unexpected_counter(source: list) -> None:
@@ -165,10 +166,19 @@ for source, expected in EXAMPLES:
    expect(unexpected_counter(source)).to(contain_only(*expected))
 #+end_src
 
-#+begin_src python :results none
+#+begin_src python :results output :exports both
 LIMIT = 10**9
-BIG_INPUT = [randint(-LIMIT, LIMIT) for item in range(10**2)]
+SIZE = 10**3
+CANDIDATES = 3
+SOURCE = [randint(-LIMIT, LIMIT) for item in range(CANDIDATES)]
+BIG_INPUT = random.choices(SOURCE, k=SIZE)
+print(Counter(BIG_INPUT).most_common())
+print(SIZE/3)
 #+end_src
+
+#+RESULTS:
+: [(-268262472, 343), (-963976892, 329), (628939969, 328)]
+: 333.3333333333333
 
 #+begin_src python :results output :exports both
 counter_time = timeit("unexpected_counter(BIG_INPUT)", globals=globals())
@@ -176,7 +186,7 @@ print("Time with Counter: {0:.2}".format(counter_time))
 #+end_src
 
 #+RESULTS:
-: Time with Counter: 1.6e+01
+: Time with Counter: 2e+01
 
 #+begin_src python :results output :exports both
 uncounter_time = timeit("""
@@ -188,18 +198,24 @@ print("Time with Un-Functioned Counter: {0:.2}".format(uncounter_time))
 #+end_src
 
 #+RESULTS:
-: Time with Un-Functioned Counter: 1.6e+01
+: Time with Un-Functioned Counter: 2e+01
 
 #+begin_src python :results output :exports both
 print(counter_time - uncounter_time)
 #+end_src
 
 #+RESULTS:
-: -0.00790674699965166
+: -0.013954381982330233
 
-For some reason the individual lines are slower than the function.
+#+begin_src python :results output :exports both
+counter_output = unexpected_counter(BIG_INPUT)
+print(counter_output)
+#+end_src
 
-*** Without Imports
+#+RESULTS:
+: [-268262472]
+
+** Without Imports
 #+begin_src python :results none
 def without_imports(source: list, expected: list) -> list:
     """filters out items with too few occurrences
@@ -222,34 +238,17 @@ def without_imports(source: list, expected: list) -> list:
     return output
 #+end_src
 
-**** Example 1
-#+begin_src python :results output :exports both
-print(without_imports(input_1, expected_1))
-#+end_src
-
-#+RESULTS:
-: [3]
-
-**** Example 2
-#+begin_src python :results output :exports both
-print(without_imports(input_2, expected_2))
-#+end_src
-
-#+RESULTS:
-: [1]
-
-**** Example 3
-#+begin_src python :results output :exports both
-print(without_imports(input_3, expected_3))
-#+end_src
-
-#+RESULTS:
-: [1, 2]
-
-**** Time It
+*** Examples
 
 #+begin_src python :results none
-def unexpected(source):
+for example, expected in EXAMPLES:
+    without_imports(example, expected)
+#+end_src
+
+*** Time It
+
+#+begin_src python :results none
+def unexpected_dictionary(source):
     lower_bound = len(source)/3
     counts = {key: 0 for key in source}
     
@@ -260,64 +259,29 @@ def unexpected(source):
               if count > lower_bound]
 
 for source, expected in EXAMPLES:
-    expect(unexpected(source)).to(contain_only(*expected))
+    expect(unexpected_dictionary(source)).to(contain_only(*expected))
 #+end_src
 
 #+begin_src python :results output :exports both
-importless_time = timeit("unexpected(BIG_INPUT)", globals=globals())
+importless_time = timeit("unexpected_dictionary(BIG_INPUT)", globals=globals())
 print("Time without Counter: {0:.2}".format(importless_time))
 #+end_src
 
 #+RESULTS:
-: Time without Counter: 2.3e+01
+: Time without Counter: 1.9e+01
 
 #+begin_src python :results output :exports both
 print(counter_time - importless_time)
+unexpected_output = unexpected(BIG_INPUT)
+expect(unexpected_output).to(contain_only(*counter_output))
 #+end_src
 
 #+RESULTS:
-: -7.147983478000242
+: 0.7523003370151855
 
-So the version with the counter was a little faster.
+Strangely this was a little faster. When there were a lot of different numbers in the ~BIG_INPUT~ the ~Counter~ version was faster, but with only three they're pretty much the same. But, when there were a lot of different numbers, since the ~random.choices~ is using a uniform distribution there was also never a case that had more than a third of the list either, so it wasn't really a good input.
 
-#+begin_src python :results none
-@njit
-def jitspected(source):
-    lower_bound = len(source)/3
-    counts = dict()
-
-    for item in source:
-        counts[item] = 0
-    
-    for item in source:
-        counts[item] += 1
-
-    items = counts.items()
-    return [item for item, count in items
-            if count > lower_bound]
-
-for source, expected in EXAMPLES:
-    expect(jitspected(source)).to(contain_only(*expected))
-#+end_src
-
-#+begin_src python :results output :exports both
-jit_time = timeit("jitspected(BIG_INPUT)", globals=globals())
-print("With numba: {0:0.2}".format(jit_time))
-#+end_src
-
-#+RESULTS:
-: With numba: 2.1e+02
-
-#+begin_src python :results output :exports both
-print(counter_time - jit_time)
-#+end_src
-
-#+RESULTS:
-: -181.21263731
-
-For some reason numba slows it down a lot. Oh, well.
-
-*** Reducing the Counter Lines
+** Reducing the Counter Lines
 
 #+begin_src python :results output :exports both
 re_uncounter_time = timeit("""
@@ -331,19 +295,70 @@ print("Time with Un-Rolled-Functioned Counter: {0:.2}".format(re_uncounter_time)
 : Time with Un-Rolled-Functioned Counter: 2e+01
 
 #+begin_src python :results output :exports both
-print(uncounter_time - re_uncounter_time)
+print(counter_time - re_uncounter_time)
 #+end_src
 
 #+RESULTS:
-: -3.2352328460037825
+: -0.01702814898453653
 
- The single comprehension is a little slower than the three-lined version.
+ The single comprehension is a little slower than the function (although not noticeably).
 
 #+begin_src python :results output :exports both
-print(importless_time - re_uncounter_time)
+print(re_uncounter_time - importless_time)
 #+end_src
 
 #+RESULTS:
-: 2.3669229059960344
+: 0.769328485999722
 
-It's still faster than using a dict without a counter, though. I guess because the Counter is probably written in C. Kind of feels like cheating to use a counter, though.
+* Majority Vote and Heavy Hitters Algorithms
+
+On the discussion board for [[https://leetcode.com/problems/majority-element-ii/][the Majority Element II problem on LeetCode]] there's several people who mention the [[https://en.wikipedia.org/w/index.php?title=Boyer%E2%80%93Moore_majority_vote_algorithm&oldid=1173091113][Boyer-Moore Majority Vote Algorithm]] which is a [[https://en.wikipedia.org/w/index.php?title=Streaming_algorithm&oldid=1172213699][Streaming Algorithm]]
+to find the element with the majority of the places in a sequence. Since it's a streaming algorithm it doesn't build a dictionary (or Counter) like I did but instead uses two passes over the sequence keeping the majority element in a variable. This is the algorithm given on Wikipedia.
+
+#+begin_export html
+<pre id="boyer-moore"  class="pseudocode">
+\begin{algorithm}
+\caption{Boyer-Moore Majority Voting Algorithm}
+\begin{algorithmic}
+\INPUT A collection of votes
+\OUTPUT The candidate that might have the majority
+\PROCEDURE{MajorityVote}{\(votes\)}
+  \STATE \(lead \gets 0\)
+  \STATE $candidate \gets None$
+  \FOR {$vote \in votes$}
+   \IF {$lead = 0$}
+    \STATE $candidate \gets vote$
+    \STATE $lead \gets 1$
+  \ELSEIF {$candidate$ = vote}
+    \STATE $lead \gets lead + 1$
+  \ELSE
+    \STATE $lead \gets lead - 1$
+   \ENDIF
+  \ENDFOR
+\RETURN candidate
+\ENDPROCEDURE
+\end{algorithmic}
+\end{algorithm}
+</pre>
+#+end_export
+
+There is some kind of race condition that kills the math in the pseudocode if you reload the page without clearing the browser cache.
+
+* Reference
+
+-  Boyer–Moore majority vote algorithm. In: Wikipedia [Internet]. 2023 [cited 2023 Oct 9]. Available from: https://en.wikipedia.org/w/index.php?title=Boyer%E2%80%93Moore_majority_vote_algorithm&oldid=1173091113
+
+- Misra–Gries heavy hitters algorithm. In: Wikipedia [Internet]. 2023 [cited 2023 Oct 9]. Available from: https://en.wikipedia.org/w/index.php?title=Misra%E2%80%93Gries_heavy_hitters_algorithm&oldid=1163180121
+
+- Streaming algorithm. In: Wikipedia [Internet]. 2023 [cited 2023 Oct 9]. Available from: https://en.wikipedia.org/w/index.php?title=Streaming_algorithm&oldid=1172213699
+
+ - https://leetcode.com/problems/majority-element-ii/ : The Majority Element Problem on LeetCode
+
+#+begin_export html
+<script>
+window.addEventListener('load', function () {
+    /* pseudocode.renderElement(document.getElementById("boyer-moore")); */
+    pseudocode.renderClass("pseudocode");
+});
+</script>
+#+end_export
