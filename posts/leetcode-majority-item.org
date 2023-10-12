@@ -13,7 +13,7 @@
 #+END_COMMENT
 #+OPTIONS: ^:{}
 #+TOC: headlines 2
-#+PROPERTY: header-args :session ~/.local/share/jupyter/runtime/kernel-352d2996-f830-43d1-8e14-406f25c95e00-ssh.json
+#+PROPERTY: header-args :session ~/.local/share/jupyter/runtime/kernel-3fa2f546-e361-4fe9-a414-81ff1291e3f5-ssh.json
 
 #+BEGIN_SRC python :results none :exports none
 %load_ext autoreload
@@ -177,7 +177,7 @@ print(SIZE/3)
 #+end_src
 
 #+RESULTS:
-: [(-268262472, 343), (-963976892, 329), (628939969, 328)]
+: [(-12552546, 344), (452607266, 334), (-637442002, 322)]
 : 333.3333333333333
 
 #+begin_src python :results output :exports both
@@ -205,7 +205,7 @@ print(counter_time - uncounter_time)
 #+end_src
 
 #+RESULTS:
-: -0.013954381982330233
+: 0.08289652500025113
 
 #+begin_src python :results output :exports both
 counter_output = unexpected_counter(BIG_INPUT)
@@ -213,7 +213,7 @@ print(counter_output)
 #+end_src
 
 #+RESULTS:
-: [-268262472]
+: [-12552546, 452607266]
 
 ** Without Imports
 #+begin_src python :results none
@@ -268,7 +268,7 @@ print("Time without Counter: {0:.2}".format(importless_time))
 #+end_src
 
 #+RESULTS:
-: Time without Counter: 1.9e+01
+: Time without Counter: 2.7e+01
 
 #+begin_src python :results output :exports both
 print(counter_time - importless_time)
@@ -279,36 +279,7 @@ expect(unexpected_output).to(contain_only(*counter_output))
 #+RESULTS:
 : 0.7523003370151855
 
-Strangely this was a little faster. When there were a lot of different numbers in the ~BIG_INPUT~ the ~Counter~ version was faster, but with only three they're pretty much the same. But, when there were a lot of different numbers, since the ~random.choices~ is using a uniform distribution there was also never a case that had more than a third of the list either, so it wasn't really a good input.
-
-** Reducing the Counter Lines
-
-#+begin_src python :results output :exports both
-re_uncounter_time = timeit("""
-output = [key for key, value in Counter(BIG_INPUT).items()
-if value > len(BIG_INPUT)/3]
-""", globals=globals())
-print("Time with Un-Rolled-Functioned Counter: {0:.2}".format(re_uncounter_time))
-#+end_src
-
-#+RESULTS:
-: Time with Un-Rolled-Functioned Counter: 2e+01
-
-#+begin_src python :results output :exports both
-print(counter_time - re_uncounter_time)
-#+end_src
-
-#+RESULTS:
-: -0.01702814898453653
-
- The single comprehension is a little slower than the function (although not noticeably).
-
-#+begin_src python :results output :exports both
-print(re_uncounter_time - importless_time)
-#+end_src
-
-#+RESULTS:
-: 0.769328485999722
+Strangely this was a little faster. When I originally ran this there were a lot of different numbers in the ~BIG_INPUT~ and the ~Counter~ version was faster, but with only three they're pretty much the same. But, when there were a lot of different numbers, since the ~random.choices~ is using a uniform distribution there was also never a value that had occured more than a third of the time in the list either, so it wasn't really a good input.
 
 * Majority Vote and Heavy Hitters Algorithms
 
@@ -316,33 +287,108 @@ On the discussion board for [[https://leetcode.com/problems/majority-element-ii/
 to find the element with the majority of the places in a sequence. Since it's a streaming algorithm it doesn't build a dictionary (or Counter) like I did but instead uses two passes over the sequence keeping the majority element in a variable. This is the algorithm given on Wikipedia.
 
 #+begin_export html
-<pre id="boyer-moore"  class="pseudocode">
+<pre id="boyer-moore" class="pseudocode">
 \begin{algorithm}
 \caption{Boyer-Moore Majority Voting Algorithm}
 \begin{algorithmic}
-\INPUT A collection of votes
+\INPUT A collection of votes with a candidate with the majority of votes
 \OUTPUT The candidate that might have the majority
-\PROCEDURE{MajorityVote}{\(votes\)}
-  \STATE \(lead \gets 0\)
-  \STATE $candidate \gets None$
-  \FOR {$vote \in votes$}
-   \IF {$lead = 0$}
-    \STATE $candidate \gets vote$
-    \STATE $lead \gets 1$
-  \ELSEIF {$candidate$ = vote}
-    \STATE $lead \gets lead + 1$
+\PROCEDURE{MajorityVote}{\textit{votes}}
+  \STATE \textit{lead} $\gets 0$
+  \STATE \textit{candidate} $\gets$ \textit{None}
+  \FOR {\textit{vote} $\in$ \textit{votes}}
+   \IF {\textit{lead = 0}}
+    \STATE \textit{candidate} $\gets$ \textit{vote}
+    \STATE \textit{lead} $\gets 1$
+  \ELSEIF {\textit{candidate = vote}}
+    \STATE \textit{lead} $\gets$ \textit{lead + 1}
   \ELSE
-    \STATE $lead \gets lead - 1$
+    \STATE \textit{lead} $\gets$ \textit{lead - 1}
    \ENDIF
   \ENDFOR
-\RETURN candidate
+\RETURN \textit{candidate}
 \ENDPROCEDURE
 \end{algorithmic}
 \end{algorithm}
 </pre>
 #+end_export
 
-There is some kind of race condition that kills the math in the pseudocode if you reload the page without clearing the browser cache.
+**Note to self:** There is some kind of race-condition going on between ~pseudocode.js~ and ~MathJax~ which causes the math to not be rendered some times. Reloading the page or emptying the browser cache seems to fix it.
+
+An important thing to note is that this only works if one of the candidates has more than half of the votes (the majority), not necessarily the most votes. If none of the candidates has more than half of the votes it might return not just the highest vote getter but any candidate. Consider this set.
+
+\[
+\{A, A, B, B, C, A\}
+\]
+
+| Vote | Candidate | Lead |
+|------+-----------+------|
+| A    | A         |    1 |
+| A    | A         |    2 |
+| B    | A         |    1 |
+| B    | A         |    0 |
+| C    | C         |    1 |
+| A    | C         | 0    |
+
+A has the most votes, but not greater than half and it ends up returning C as the leading candidate. Adding another A in there at any point would give it the majority and we would always return A.
+
+One way to think of it is to consider that when the lead goes to zero it is essentially the same as resetting the algorithm and starting at the next vote - if the count goes to 0, none of the candidates had more votes than any other up to that point, so if there is an element that has the majority it will have to have it in the votes that follow. But if the candidate with the most votes doesn't have more than half of the total then it's possible that the other votes will negate it before reaching the end and we end up choosing the wrong candidate as the winner.
+
+Another thing to note is that we are keeping a single counter so we don't know how many votes the eventual winner got. We could start a counter when a candidate takes the lead, but unless the eventual winner is always in the lead we'd end up skipping votes everytime the lead went to 0 and the leading candidate was swapped out.
+
+So why not keep counts for all the candidates? That's what I did with the Counter and dict versions of our /Majority Items/ problem, but the Streaming Algorithms are meant to solve problems using a minimum of memory, something that the collections don't do. So instead, once we find our leading candidate on our first pass through the votes, we need to run a second pass to count up the number of votes the chosen candidate got to make sure it was the majority. If it wasn't, then the algorithm won't work so we don't have an answer.
+
+** The Misra-Gries Heavy-Hitters Algorithm
+
+One thing noticeable about the Boyer-Moore Voting Algorithm is that since it only works if one candidate gets more than half of the votes, then it doesn't really work for our problem, since we're looking for the candidates that get more than a third of the votes. The Heavy Hitters problem is an extension of the Majority Vote problem where instead of finding the candidate with more than half of the votes we find all candidates with greater than \(^n/_k\)votes where \(k \geq 2\) and the /Misra-Gries Heavy Hitters Algorithm/ is one way to solve it.
+
+It works by maintaining a collection (/bag/) that holds the votes for the candidates that might have greater than \(^n/_k\) votes. This might seem like we're back to where we were with the dict, but the way the algorithm is constructed, the collection never holds more than /k/ distinct candidates (although it does keep track of their votes). Like the Boyer-Moore algorithm the Misra-Gries algorithm needs a seconds pass to determine which candidates actually have enough votes to be a heavy-hitter.
+
+The output of the first pass is useful by itself, even if it doesn't completely solve the Heavy-Hitters problem, since it's constructed in a way so that the collection we're making will have the /k - 1/ candidates with the most votes.
+
+Here's my slight re-wording of the algorithm as given on wikipedia.
+
+#+begin_export html
+<pre id="misra-gries" class="pseudocode">
+\begin{algorithm}
+\caption{Misra-Gries Heavy-Hitter Algorithm}
+\begin{algorithmic}
+\INPUT A collection of \textit{votes}
+\INPUT $k$, the upper limit for candidates to output
+\OUTPUT The $k - 1$ candidates that might be heavy hitters
+\PROCEDURE{HeavyHitters}{\textit{votes}}
+  \STATE \textit{distinct} $\gets 0$
+  \STATE \textit{candidates} $\gets$ \{\}
+  \FOR {\textit{vote} $\in$ \textit{votes}}
+  
+    \STATE Add \textit{candidate} to \textit{candidates}
+    
+    \IF {\textit{candidate} $\notin$ \textit{candidates}}
+      \STATE \textit{distinct = distinct + 1}
+   \ENDIF
+
+   \IF {\textit{distinct} = $k$}
+      \STATE Remove $k$ distinct elements from \textit{candidates}
+      \STATE Update \textit{distinct}
+   \ENDIF
+  \ENDFOR
+\RETURN \textit{candidates}
+\ENDPROCEDURE
+\end{algorithmic}
+\end{algorithm}
+</pre>
+#+end_export
+
+So, here's some things to note about the algorithm:
+
+ - $\textit{distinct}$ is the number of unique canditates in $\textit{candidates}$ (we're adding each vote so $candidates$ is larger than $\textit{distinct})$
+ - $\textit{distinct}$ only gets incremented when we encounter a new candidate, and if $\textit{distinct} = k$ when we remove $k$ elements from $\textit{candidates}$ the last candidate only has one entry, so it gets removed
+ - Update $\textit{distinct}$ is a little vague
+ - Since we're storing all votes, doesn't that mean we're going to use a lot of memory? Why not just go with the earlier non-streaming solutions?
+
+The answer to the vagueness of /Update distinct/ and the size of our /candidates/ is that we don't implement it exactly this way (and there's more than one way to implement it). Instead of storing all the votes, we can just store the counts of the votes (since that's all we care about anyway) along with the value that's being counted. Then we remove any value/count pair where the count has dropped to zero and reduce /distinct/ when we do. Since key-value pairs are natural for a dictionary we could implement it that way, knowing that it won't have more than /k-1/ keys and more than one value each.
+
+An even better solution might be to create a collection of ( candidate, count ) tuples, but for our particular problem, there's an even better way.
 
 * Reference
 
