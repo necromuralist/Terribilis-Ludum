@@ -13,7 +13,7 @@
 #+END_COMMENT
 #+OPTIONS: ^:{}
 #+TOC: headlines 2
-#+PROPERTY: header-args :session ~/.local/share/jupyter/runtime/kernel-36c14f65-8fe2-40e8-8dab-541eacccc6e0-ssh.json
+#+PROPERTY: header-args :session ~/.local/share/jupyter/runtime/kernel-ead4d7ef-83c4-4565-a97f-e954226a66b1-ssh.json
 
 #+BEGIN_SRC python :results none :exports none
 %load_ext autoreload
@@ -35,6 +35,27 @@
 1. Find $\frac{n}{3}$
 2. Count all the element frequencies
 3. Build a list of all the elemennts that occur frequently enough
+
+** Imports
+
+#+begin_src python :results none
+# python
+from collections import Counter
+from functools import partial
+from random import randint
+from timeit import timeit
+from typing import List
+
+import random
+
+# pypi
+from expects import contain_only, expect
+import altair
+import pandas
+
+# monkey brain
+from graeae.visualization.altair_helpers import output_path, save_chart
+#+end_src
 
 ** The Examples
 
@@ -110,66 +131,6 @@ def test_examples(tester):
         expect(tester(example)).to(contain_only(*expected))
     return
 #+end_src
-** Using Counter
-
-#+begin_src python :results none
-# python
-from collections import Counter
-from random import randint
-from timeit import timeit
-from typing import List
-
-import random
-
-# pypi
-from expects import contain_only, expect
-#+end_src
-
-
-
-#+begin_src python :results none
-def using_counter(source: list, expected) -> list:
-    """gets the output for the source
-
-    Args:
-     source: collection to filter
-     expected: the expected output
-
-    Returns:
-     items in source that occur more than n/3 times
-    """
-    counts = Counter(source)
-    lower_bound = len(source)/3
-    output = [key for key, value in counts.items() if value > lower_bound]
-    expect(output).to(contain_only(*expected))
-    return output
-#+end_src
-
-*** Example 1
-#+begin_src python :results output :exports both
-print(using_counter(input_1, expected_1))
-#+end_src
-
-#+RESULTS:
-: [3]
-
-*** Example 2
-
-#+begin_src python :results output :exports both
-print(using_counter(input_2, expected_2))
-#+end_src
-
-#+RESULTS:
-: [1]
-
-*** Example 3
-
-#+begin_src python :results output :exports both
-print(using_counter(input_3, expected_3))
-#+end_src
-
-#+RESULTS:
-: [1, 2]
 
 *** A Bigger Input
 
@@ -204,60 +165,79 @@ def test_expected(tester):
 #+end_src
 
 #+RESULTS:
-: [(203794001, 348), (-579054950, 341), (323203149, 311)]
+: [(589030510, 349), (-896437045, 328), (-271632228, 323)]
 : 333.3333333333333
+: [589030510]
 
+** Using Counter
+
+#+begin_src python :results none
+def using_counter(source: List[int]) -> list:
+    """gets the output for the source
+
+    Args:
+     source: collection to filter
+
+    Returns:
+     items in source that occur more than n/3 times
+    """
+    return [key for key, value in Counter(source).items() if value > len(source)/3]
+
+test_expected(using_counter)
+#+end_src
 
 *** Timeit
 
-
 #+begin_src python :results none
-def unexpected_counter(source: list) -> List[int]:
-   return [ key for key, value in Counter(source).items()
-            if value > len(source)/3 ]
+def time_it(callable_name: str) -> float:
+    """Runs timeit on the callable and the BIG_INPUT
 
-test_expected(unexpected_counter)
+    Args:
+      callable_name: name of the majority vote code to test
+
+    Returns:
+      timeit output
+    """
+    timed = timeit("{0}(BIG_INPUT)".format(callable_name), globals=globals())
+    print("Time using {0}: {1:.2}".format(callable_name, timed))
+    return timed
 #+end_src
 
 #+begin_src python :results output :exports both
-counter_time = timeit("unexpected_counter(BIG_INPUT)", globals=globals())
-print("Time with Counter: {0:.2}".format(counter_time))
-#+end_src
-
-#+RESULTS:
-: Time with Counter: 1.5e+01
-
-#+begin_src python :results output :exports both
-uncounter_time = timeit("""
-counts = Counter(BIG_INPUT)
-lower_bound = len(BIG_INPUT)/3
-output = [key for key, value in counts.items() if value > lower_bound]
-""", globals=globals())
-print("Time with Un-Functioned Counter: {0:.2}".format(uncounter_time))
+counter_time = time_it("using_counter")
 #+end_src
 
 #+RESULTS:
-: Time with Un-Functioned Counter: 1.5e+01
+: Time using using_counter: 1.5e+01
 
 #+begin_src python :results output :exports both
-print(counter_time - uncounter_time)
-#+end_src
-
-#+RESULTS:
-: -0.01367953699809732
-
-#+begin_src python :results output :exports both
-counter_output = unexpected_counter(BIG_INPUT)
+counter_output = using_counter(BIG_INPUT)
 print(counter_output)
 #+end_src
 
 #+RESULTS:
-: [-579054950, 203794001]
-
-** Without Imports
+: [589030510]
 
 #+begin_src python :results none
-def unexpected_dictionary(source):
+def time_and_check(test_function) -> float:
+    """Time, test, and check function against counter output
+
+    Args:
+      test_callable: majority element function to check
+
+    Returns:
+      timeit output for the function
+    """
+    test_expected(test_function)
+    expect(test_function(BIG_INPUT)).to(contain_only(*counter_output))
+    timed = time_it(test_function.__name__)
+    print("Counter Time - {0}: {1:.2}".format(test_function.__name__, counter_time - timed))
+    return timed
+#+end_src
+** Without Imports
+
+#+begin_src python :results ouput :exports botht
+def using_dictionary(source: List[int]) -> List[int]:
     """filters out items with too few occurrences
 
     Args:
@@ -267,36 +247,19 @@ def unexpected_dictionary(source):
      filtered list
     """
     lower_bound = len(source)/3
-    counts = {key: 0 for key in source}
-    
-    for item in source:
-        counts[item] += 1
 
+    counts = dict()
+    for item in source:
+            counts[item] = counts.setdefault(item, 0) + 1
     return [item for item, count in counts.items()
               if count > lower_bound]
 
-test_expected(unexpected_dictionary)
-#+end_src
-
-
-*** Time It
-
-#+begin_src python :results output :exports both
-importless_time = timeit("unexpected_dictionary(BIG_INPUT)", globals=globals())
-print("Time without Counter: {0:.2}".format(importless_time))
+dictionary_time = time_and_check(using_dictionary)
 #+end_src
 
 #+RESULTS:
-: Time without Counter: 1.9e+01
-
-#+begin_src python :results output :exports both
-print(counter_time - importless_time)
-unexpected_output = unexpected_dictionary(BIG_INPUT)
-expect(unexpected_output).to(contain_only(*counter_output))
-#+end_src
-
-#+RESULTS:
-: -3.416292815003544
+: Time using using_dictionary: 1.5e+01
+: Counter Time - using_dictionary: 0.71
 
 The times don't seem to be consistent, sometimes the Counter version is faster, sometimes when I run it the dict version is faster... I think it's more dependent on what's going on with the computer.
 
@@ -411,7 +374,7 @@ An even better solution might be to create a collection of ( candidate, count ) 
 
 ** Python Implementation
 #+begin_src python :results none
-def misra_gries(votes: list) -> tuple:
+def misra_gries(votes: List[int]) -> tuple[int, int]: 
     """find the summary for the source
 
     Args:
@@ -468,23 +431,23 @@ Example: 3
 	Actual: (1, 2)
 
 Big Input
-	Expected: [-579054950, 203794001]
-	Actual: (-579054950, 203794001)
+	Expected: [589030510]
+	Actual: (-896437045, 589030510)
 #+end_example
 
-So it got the last two right, as well as the random example, but put in an extra candidate in the first case
+So it got the last two right, but put in an extra candidate in the first case and the random example.
 
 ** The Second Pass
 
-#+begin_src python :results none
-def heavy_hitters(votes: list) -> tuple:
+#+begin_src python :results output :exports both
+def heavy_hitters(votes: list[int]) -> list[int]:
     """Finds candidates with over a third of the votes
 
     Args:
      votes: list of votes for candidates
 
     Returns:
-      tuple of candidates with over a third of the votes
+      list of candidates with over a third of the votes
     """
     candidate_1, candidate_2 = misra_gries(votes)
     count_1 = count_2 = 0
@@ -498,25 +461,19 @@ def heavy_hitters(votes: list) -> tuple:
     include_1 = count_1 > len(votes)/3
     include_2 = count_2 > len(votes)/3
     
-    return tuple(
+    return [
         candidate for candidate, include in (
             (candidate_1, include_1), (candidate_2, include_2))
-        if include)
+        if include]
 
-test_expected(heavy_hitters)
-#+end_src
-
-#+begin_src python :results output :exports both
-heavy_time = timeit("heavy_hitters(BIG_INPUT)", globals=globals())
-print("Heavy Hitters Time: {0:.2}".format(heavy_time))
-print("Counter-Time - Heavy Hitters: {0:.2}".format(counter_time - heavy_time))
+heavy_time = time_and_check(heavy_hitters)
 #+end_src
 
 #+RESULTS:
-: Heavy Hitters Time: 9.0
-: Counter-Time - Heavy Hitters: 6.3
+: Time using heavy_hitters: 8.1
+: Counter Time - heavy_hitters: 7.2
 
-Well, it looks like the heavy-hitters was quite a bit faster...
+Well, it looks like the heavy-hitters was a bit faster...
 
 ** A LeetCode Submission
 
@@ -572,8 +529,8 @@ Weirdly, in LeetCode it runs slighly slower (7 milliseconds, so about the same, 
 
 Okay, I'm a little torn about this, but the submissions that use up the lowest memory on LeetCode seem to either use a Counter, like I did at first or they used the python ~list.count~ method, which works, but it seems, like the Counter, to be kind of a cheat, although I guess my use of ~len(votes)~ isn't that far off. Anyway.
 
-#+begin_src python :results none
-def using_list_count(votes: list) -> list:
+#+begin_src python :results output :exports both
+def using_list_count(votes: list[int]) -> list[int]:
     """finds the candidates with more than a third of the votes
 
     Args:
@@ -582,26 +539,44 @@ def using_list_count(votes: list) -> list:
     Returns:
       candidates that got more than a third of the vote
     """
-
     return [candidate for candidate in set(votes)
             if votes.count(candidate) > len(votes)/3]
 
-test_expected(using_list_count)
-#+end_src
-
-#+begin_src python :results output :exports both
-list_count_time = timeit("using_builtin(BIG_INPUT)", globals=globals())
-print("Using List Count Time: {0:.2}".format(list_count_time))
-print("Counter-Time - list_count: {0:.2}".format(counter_time - list_count_time))
+list_count_time = time_and_check(using_list_count)
 #+end_src
 
 #+RESULTS:
-: Using List Count Time: 5.1
-: Counter-Time - list_count: 1e+01
+: Time using using_list_count: 9.4
+: Counter Time - using_list_count: 5.9
 
 Weirdly the Counter in my code is always slower but some of the fastest (and lowest memory) solutions on LeetCode use Counter. Maybe it's a pypy versus cPython thing.
 
 This version does about the same as the dictionary solution on LeetCode (actually I accidentally returned a generator instead of a list and it did even better, but I suppose that violates the problem statement) so between the two of them they're the best ones. The dictionary did 1 millisecond better, but that seems too small a difference to matter. If I were to think of this as a translate the problem statement to python problem I would probably go with this, even though the Counter was what first came to mind, and the dict version doesn't require remembering list methods.
+
+#+begin_src python :results output :exports both
+def dict_list_counts(votes: list[int]) -> list[int]:
+    """finds the candidates with more than a third of the votes
+
+    Args:
+     votes: collection of candidate votes
+
+    Returns:
+      candidates that got more than a third of the vote
+    """
+    lower_bound = len(votes)/3
+    vote_counts = {vote: 0 for vote in votes}
+    vote_counts = {vote: votes.count(vote) for vote in vote_counts}
+    return [candidate for candidate in vote_counts
+            if vote_counts[candidate] > lower_bound]
+
+dict_list_time = time_and_check(dict_list_counts)
+#+end_src
+
+#+RESULTS:
+: Time using dict_list_counts: 1.3e+01
+: Counter Time - dict_list_counts: 2.6
+
+So this was a little faster than uisng the dictionary and a for loop but slower than the Heavy Hitters or the /set/ version in ~using_list_count~
 
 
 * Reference

@@ -12,8 +12,12 @@ FROM ${IMAGE_NAME}:${VERSION}
 # this will also work but it suppresses all dialog boxes instead of setting up the timezone
 # ARG DEBIAN_FRONTEND=noninteractive
 
+# numpy needs lapack and blas headers
+
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
+    libopenblas-dev \
+    liblapack-dev \
     openssh-server \
     rsync \
     screen \
@@ -49,6 +53,7 @@ RUN mkdir $VIRTUALENVS && \
 ENV PATH="$VIRTUALENV/bin:$PATH"
 
 RUN pypy3 -m ensurepip
+
 # install wheel outside of the requirements file
 # otherwise the other packages in the file won't be able to use it
 # when you install them from the requirements file
