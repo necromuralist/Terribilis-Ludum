@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    #vis.vega-embed {
+      width: 100%;
+      display: flex;
+    }
+
+    #vis.vega-embed details,
+    #vis.vega-embed details summary {
+      position: relative;
+    }
+  </style>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vega-lite@5.15.1"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+</head>
+<body>
+  <div id="vis"></div>
+  <script>
+    (function(vegaEmbed) {
+      var spec = {"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "data": {"name": "data-f9efc72c0d4d52163829ef718daf86ed"}, "mark": {"type": "bar"}, "encoding": {"tooltip": [{"field": "Function", "type": "nominal"}, {"field": "Time (ms)", "format": "d", "type": "quantitative"}], "x": {"axis": {"labelAngle": -45}, "field": "Function", "sort": "-y", "type": "nominal"}, "y": {"field": "Time (ms)", "type": "quantitative"}}, "height": 525, "params": [{"name": "param_23", "select": {"type": "interval", "encodings": ["x", "y"]}, "bind": "scales"}], "title": "LeetCode Function Timeit Times", "width": 800, "$schema": "https://vega.github.io/schema/vega-lite/v5.15.1.json", "datasets": {"data-f9efc72c0d4d52163829ef718daf86ed": [{"Function": "List Counts (with Generator)", "Time (ms)": 100}, {"Function": "Using Dictionary", "Time (ms)": 103}, {"Function": "List Counts (one-liner)", "Time (ms)": 104}, {"Function": "List Counts (with dict)", "Time (ms)": 107}, {"Function": "Heavy Hitter", "Time (ms)": 110}, {"Function": "List Counts (with List)", "Time (ms)": 114}]}};
+      var embedOpt = {"mode": "vega-lite"};
+
+      function showError(el, error){
+          el.innerHTML = ('<div style="color:red;">'
+                          + '<p>JavaScript Error: ' + error.message + '</p>'
+                          + "<p>This usually means there's a typo in your chart specification. "
+                          + "See the javascript console for the full traceback.</p>"
+                          + '</div>');
+          throw error;
+      }
+      const el = document.getElementById('vis');
+      vegaEmbed("#vis", spec, embedOpt)
+        .catch(error => showError(el, error));
+    })(vegaEmbed);
+
+  </script>
+</body>
+</html>
