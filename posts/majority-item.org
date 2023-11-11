@@ -1,0 +1,18 @@
+#+BEGIN_COMMENT
+.. title: Majority Item
+.. slug: majority-item
+.. date: 2023-11-10 18:44:35 UTC-05:00
+.. tags: 
+.. category: 
+.. link: 
+.. description: 
+.. type: text
+.. status: 
+.. updated: 
+
+#+END_COMMENT
+
+
+* First Panels
+
+[[lazy-img-url:https://filedn.com/lKA05W1iHns4eTWccSVfpum/majority-element/majority-element-panel-001-002-unscaled.png][Majority-Item Panels 1 & 2]]
