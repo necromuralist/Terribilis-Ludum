@@ -2,15 +2,22 @@
 .. title: Edabit: Convert a Number to Base-2
 .. slug: edabit-convert-a-number-to-base-2
 .. date: 2023-11-13 21:13:10 UTC-05:00
-.. tags: 
-.. category: 
+.. tags: edabit,puzzle,algorithm
+.. category: Puzzle
 .. link: 
-.. description: 
+.. description: Converting a number from decimal to base-2.
 .. type: text
 .. status: 
 .. updated: 
 
 #+END_COMMENT
+#+OPTIONS: ^:{}
+#+TOC: headlines 3
+#+PROPERTY: header-args :session ~/.local/share/jupyter/runtime/kernel-a3727a09-2d18-473b-a8ae-293645ee8a3d-ssh.json
+#+BEGIN_SRC python :results none :exports none
+%load_ext autoreload
+%autoreload 2
+#+END_SRC
 * The Problem Statement (from Edabit)
 #+begin_quote
 Create a function that returns a base-2 (binary) representation of a base-10 (decimal) string number. To convert is simple: ((2) means base-2 and (10) means base-10) 010101001(2) = 1 + 8 + 32 + 128.
@@ -31,6 +38,125 @@ binary(10) ➞ "1010"
     - Numbers will always be below 1024 (not including 1024).
     - The strings will always go to the length at which the most left bit's value gets bigger than the number in decimal.
     - If a binary conversion for 0 is attempted, return "0".
+
+* A Tester
+
+#+begin_src python :results none
+# python
+import math
+import random
+
+# from pypi
+from expects import equal, expect
+#+end_sr
+
+#+begin_src python :results output :exports both
+def built_in(integer):
+    return bin(integer).lstrip("-0b")
+
+print(built_in(5))
+#+end_src
+
+#+RESULTS:
+: 101
+
+#+begin_src python :results none
+def tester(testee, value):
+    if value == 0:
+        expect(testee(value)).to(equal("0"))
+    else:
+        expect(testee(value)).to(equal(built_in(value)))
+    return
+#+end_src
+
+#+begin_src python :results none
+def tester_tester(testee, verbose=False):
+    random_case = random.randrange(2, 1024)
+    for test_case in ((0, 1, 5, 10, random_case)):
+        try:
+            tester(solution_one, test_case)
+        except ValueError as error:
+            print("error test-case: {}".format(test_case))
+            break
+        if verbose:
+            print("decimal: {} binary: {}".format(test_case,
+                                                  solution_one(test_case)))
+    retunr
+#+end_src
+
+
+* The First Python Solution
+
+#+begin_src python :results output :exports both
+def solution_one(value: int) -> str:
+    """Convert the integer to a binary string
+
+    Args:
+     - value: base-10 integer to convert
+
+    Returns:
+     - binary string version of the input
+    """
+    ZERO, ONE = "0", "1"
+    if value == 0:
+        return ZERO
+    
+    digits = math.floor(math.log2(value)) + 1
+    remainder = value
+    bits = []
+    
+    for exponent in reversed(range(digits)):
+        if 2**exponent <= remainder:
+            bits.append(ONE)
+            remainder -= 2**exponent
+        else:
+            bits.append(ZERO)
+    return "".join(bits)
+
+tester_tester(solution_one, verbose=True)
+#+end_src
+
+#+RESULTS:
+: decimal: 0 binary: 0
+: decimal: 1 binary: 1
+: decimal: 5 binary: 101
+: decimal: 10 binary: 1010
+: decimal: 980 binary: 1111010100
+
+* A Python 3 Solution
+
+#+begin_src python :results output :exports both
+def solution_three(value: int) -> str:
+    """Convert the integer to a binary string
+
+    Args:
+     - value: base-10 integer to convert
+
+    Returns:
+     - binary string version of the input
+    """
+    ZERO, ONE = "0", "1"
+    digits = value.bit_length()
+    bits = []
+    remainder = value
+
+    for exponent in reversed(range(digits)):
+        if 2**exponent <= remainder:
+            bits.append(ONE)
+            remainder -= 2**exponent
+        else:
+            bits.append(ZERO)
+    return "".join(bits) if bits else ZERO
+
+tester_tester(solution_three, verbose=True)
+#+end_src
+
+#+RESULTS:
+: decimal: 0 binary: 0
+: decimal: 1 binary: 1
+: decimal: 5 binary: 101
+: decimal: 10 binary: 1010
+: decimal: 926 binary: 1110011110
 
 * Links
 ** [[https://edabit.com/challenge/2hsyXkzDRewGSPpPE][Convert a number to Base-2]] : The Edabit problem page.
