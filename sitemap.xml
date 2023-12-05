@@ -7,34 +7,90 @@
                         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <url>
   <loc>https://necromuralist.github.io/Terribilis-Ludum/2023/index.html</loc>
-  <lastmod>2023-10-11T21:07:00Z</lastmod>
+  <lastmod>2023-12-05T22:19:00Z</lastmod>
  </url>
  <url>
   <loc>https://necromuralist.github.io/Terribilis-Ludum/archive.html</loc>
-  <lastmod>2023-10-11T21:05:00Z</lastmod>
+  <lastmod>2023-11-26T22:40:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://necromuralist.github.io/Terribilis-Ludum/categories/algorithm/index.html</loc>
+  <lastmod>2023-12-05T22:19:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://necromuralist.github.io/Terribilis-Ludum/categories/cat_practice/index.html</loc>
+  <lastmod>2023-10-15T00:33:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://necromuralist.github.io/Terribilis-Ludum/categories/cat_puzzle/index.html</loc>
+  <lastmod>2023-12-05T22:19:00Z</lastmod>
  </url>
  <url>
   <loc>https://necromuralist.github.io/Terribilis-Ludum/categories/cat_sites/index.html</loc>
-  <lastmod>2023-10-11T21:07:00Z</lastmod>
+  <lastmod>2023-11-26T22:40:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://necromuralist.github.io/Terribilis-Ludum/categories/edabit/index.html</loc>
+  <lastmod>2023-12-05T22:19:00Z</lastmod>
  </url>
  <url>
   <loc>https://necromuralist.github.io/Terribilis-Ludum/categories/index.html</loc>
-  <lastmod>2023-10-11T21:05:00Z</lastmod>
+  <lastmod>2023-11-28T23:50:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://necromuralist.github.io/Terribilis-Ludum/categories/leetcode/index.html</loc>
+  <lastmod>2023-10-15T00:33:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://necromuralist.github.io/Terribilis-Ludum/categories/practice/index.html</loc>
+  <lastmod>2023-10-15T00:33:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://necromuralist.github.io/Terribilis-Ludum/categories/puzzle/index.html</loc>
+  <lastmod>2023-12-05T22:19:00Z</lastmod>
  </url>
  <url>
   <loc>https://necromuralist.github.io/Terribilis-Ludum/categories/puzzles/index.html</loc>
-  <lastmod>2023-10-11T21:07:00Z</lastmod>
+  <lastmod>2023-11-26T22:40:00Z</lastmod>
  </url>
  <url>
   <loc>https://necromuralist.github.io/Terribilis-Ludum/categories/sites/index.html</loc>
-  <lastmod>2023-10-11T21:07:00Z</lastmod>
+  <lastmod>2023-11-26T22:40:00Z</lastmod>
  </url>
  <url>
   <loc>https://necromuralist.github.io/Terribilis-Ludum/index.html</loc>
-  <lastmod>2023-10-11T21:07:00Z</lastmod>
+  <lastmod>2023-12-05T22:19:00Z</lastmod>
  </url>
  <url>
   <loc>https://necromuralist.github.io/Terribilis-Ludum/posts/code-puzzle-sites/index.html</loc>
-  <lastmod>2023-10-11T21:07:00Z</lastmod>
+  <lastmod>2023-11-26T22:40:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://necromuralist.github.io/Terribilis-Ludum/posts/edabit-convert-a-number-to-base-2/index.html</loc>
+  <lastmod>2023-12-05T22:19:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://necromuralist.github.io/Terribilis-Ludum/posts/leetcode-majority-item/function_percentage_timeits.html</loc>
+  <lastmod>2023-10-15T00:31:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://necromuralist.github.io/Terribilis-Ludum/posts/leetcode-majority-item/function_timeits.html</loc>
+  <lastmod>2023-10-15T00:32:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://necromuralist.github.io/Terribilis-Ludum/posts/leetcode-majority-item/function_timets.html</loc>
+  <lastmod>2023-10-14T23:44:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://necromuralist.github.io/Terribilis-Ludum/posts/leetcode-majority-item/index.html</loc>
+  <lastmod>2023-11-10T23:47:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://necromuralist.github.io/Terribilis-Ludum/posts/leetcode-majority-item/leetcode_timeits.html</loc>
+  <lastmod>2023-10-15T00:32:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://necromuralist.github.io/Terribilis-Ludum/posts/majority-item/index.html</loc>
+  <lastmod>2023-11-11T00:13:00Z</lastmod>
  </url>
 </urlset>

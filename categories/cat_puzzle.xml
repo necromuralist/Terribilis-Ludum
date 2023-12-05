@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Terribilis Ludum</title><link>https://necromuralist.github.io/Terribilis-Ludum/</link><description>The Terrible Game.</description><atom:link href="https://necromuralist.github.io/Terribilis-Ludum/rss.xml" rel="self" type="application/rss+xml"></atom:link><language>en</language><copyright>Contents © 2023 &lt;a href="mailto:cloisteredmonkey.jmark@slmail.me"&gt;The Cloistered Monkey&lt;/a&gt; 
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Terribilis Ludum (Posts about Puzzle)</title><link>https://necromuralist.github.io/Terribilis-Ludum/</link><description></description><atom:link href="https://necromuralist.github.io/Terribilis-Ludum/categories/cat_puzzle.xml" rel="self" type="application/rss+xml"></atom:link><language>en</language><copyright>Contents © 2023 &lt;a href="mailto:cloisteredmonkey.jmark@slmail.me"&gt;The Cloistered Monkey&lt;/a&gt; 
 &lt;div id="license" xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/"&gt;&lt;span property="dct:title"&gt;Terribilis Ludum&lt;/span&gt; is licensed under
 &lt;a href="http://creativecommons.org/licenses/by-sa/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"&gt;CC BY-SA 4.0
 &lt;img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"&gt;
@@ -302,15 +302,4 @@ So, there you go. I wasn't expecting to learn anything from this problem, but I 
 &lt;h4 id="org82f0806"&gt;&lt;a href="https://docs.python.org/3/library/stdtypes.html#int.bit_length"&gt;int.bit_length&lt;/a&gt;&lt;/h4&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;/div&gt;</description><category>algorithm</category><category>edabit</category><category>puzzle</category><guid>https://necromuralist.github.io/Terribilis-Ludum/posts/edabit-convert-a-number-to-base-2/index.html</guid><pubDate>Tue, 14 Nov 2023 02:13:10 GMT</pubDate></item><item><title>Code Puzzle Sites</title><link>https://necromuralist.github.io/Terribilis-Ludum/posts/code-puzzle-sites/index.html</link><dc:creator>The Cloistered Monkey</dc:creator><description>&lt;ul class="org-ul"&gt;
-&lt;li&gt;&lt;a href="https://leetcode.com/problemset/all/"&gt;Leet Code&lt;/a&gt; - The problems are based on interview questions.&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://edabit.com/challenges#!"&gt;edabit&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://coderbyte.com/developers"&gt;CoderByte&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://www.codewars.com/"&gt;Code Wars&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://www.codingame.com/start/"&gt;Codingame&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://app.geektastic.com/"&gt;Geektastic&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://www.hackerrank.com/"&gt;Hacker Rank&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://projecteuler.net/"&gt;Project Euler&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://www.spoj.com/"&gt;Spherical Online Judge&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://www.topcoder.com/"&gt;Top Coder&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</description><category>puzzles</category><category>sites</category><guid>https://necromuralist.github.io/Terribilis-Ludum/posts/code-puzzle-sites/index.html</guid><pubDate>Thu, 05 Oct 2023 02:23:35 GMT</pubDate></item></channel></rss>
+&lt;/div&gt;</description><category>algorithm</category><category>edabit</category><category>puzzle</category><guid>https://necromuralist.github.io/Terribilis-Ludum/posts/edabit-convert-a-number-to-base-2/index.html</guid><pubDate>Tue, 14 Nov 2023 02:13:10 GMT</pubDate></item></channel></rss>
