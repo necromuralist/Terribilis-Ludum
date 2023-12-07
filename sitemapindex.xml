@@ -10,10 +10,6 @@
   <lastmod>2023-12-05T22:19:00Z</lastmod>
  </sitemap>
  <sitemap>
-  <loc>https://necromuralist.github.io/Terribilis-Ludum/categories/cat_practice.xml</loc>
-  <lastmod>2023-10-15T00:33:00Z</lastmod>
- </sitemap>
- <sitemap>
   <loc>https://necromuralist.github.io/Terribilis-Ludum/categories/cat_puzzle.xml</loc>
   <lastmod>2023-12-05T22:19:00Z</lastmod>
  </sitemap>
@@ -24,14 +20,6 @@
  <sitemap>
   <loc>https://necromuralist.github.io/Terribilis-Ludum/categories/edabit.xml</loc>
   <lastmod>2023-12-05T22:19:00Z</lastmod>
- </sitemap>
- <sitemap>
-  <loc>https://necromuralist.github.io/Terribilis-Ludum/categories/leetcode.xml</loc>
-  <lastmod>2023-10-15T00:33:00Z</lastmod>
- </sitemap>
- <sitemap>
-  <loc>https://necromuralist.github.io/Terribilis-Ludum/categories/practice.xml</loc>
-  <lastmod>2023-10-15T00:33:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://necromuralist.github.io/Terribilis-Ludum/categories/puzzle.xml</loc>
@@ -47,10 +35,10 @@
  </sitemap>
  <sitemap>
   <loc>https://necromuralist.github.io/Terribilis-Ludum/rss.xml</loc>
-  <lastmod>2023-12-05T22:19:00Z</lastmod>
+  <lastmod>2023-12-07T01:04:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://necromuralist.github.io/Terribilis-Ludum/sitemap.xml</loc>
-  <lastmod>2023-12-05T22:19:00Z</lastmod>
+  <lastmod>2023-12-07T01:04:00Z</lastmod>
  </sitemap>
 </sitemapindex>

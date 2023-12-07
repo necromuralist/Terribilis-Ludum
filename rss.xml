@@ -5,7 +5,359 @@
 &lt;img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"&gt;
 &lt;img src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"&gt;
 &lt;img src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1"&gt;&lt;/a&gt;&lt;/p&gt; 
-</copyright><lastBuildDate>Tue, 05 Dec 2023 22:19:28 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Edabit: Convert a Number to Base-2</title><link>https://necromuralist.github.io/Terribilis-Ludum/posts/edabit-convert-a-number-to-base-2/index.html</link><dc:creator>The Cloistered Monkey</dc:creator><description>&lt;div id="table-of-contents" role="doc-toc"&gt;
+</copyright><lastBuildDate>Thu, 07 Dec 2023 01:04:48 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>CodeWars: Not Very Secure</title><link>https://necromuralist.github.io/Terribilis-Ludum/posts/codewars-not-very-secure/index.html</link><dc:creator>The Cloistered Monkey</dc:creator><description>&lt;div id="table-of-contents" role="doc-toc"&gt;
+&lt;h2&gt;Table of Contents&lt;/h2&gt;
+&lt;div id="text-table-of-contents" role="doc-toc"&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://necromuralist.github.io/Terribilis-Ludum/posts/codewars-not-very-secure/index.html#orgfae67a9"&gt;The Problem Statement&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://necromuralist.github.io/Terribilis-Ludum/posts/codewars-not-very-secure/index.html#orgaf9c913"&gt;Testing&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://necromuralist.github.io/Terribilis-Ludum/posts/codewars-not-very-secure/index.html#org0085e68"&gt;Test Cases&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://necromuralist.github.io/Terribilis-Ludum/posts/codewars-not-very-secure/index.html#org2f5657d"&gt;The Tester&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://necromuralist.github.io/Terribilis-Ludum/posts/codewars-not-very-secure/index.html#orgab2e29b"&gt;A Solution&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://necromuralist.github.io/Terribilis-Ludum/posts/codewars-not-very-secure/index.html#orgd0e63e8"&gt;The End&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://necromuralist.github.io/Terribilis-Ludum/posts/codewars-not-very-secure/index.html#org283f782"&gt;Links&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://necromuralist.github.io/Terribilis-Ludum/posts/codewars-not-very-secure/index.html#org73fac69"&gt;Not-Very-Secure: The CodeWars problem page.&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://necromuralist.github.io/Terribilis-Ludum/posts/codewars-not-very-secure/index.html#orgfb3dc79"&gt;StackOverflow: Answer explaining the difference between &lt;code&gt;match&lt;/code&gt;, &lt;code&gt;search&lt;/code&gt;, and &lt;code&gt;fullmatch&lt;/code&gt;.&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://necromuralist.github.io/Terribilis-Ludum/posts/codewars-not-very-secure/index.html#org9a0a2ef"&gt;Python's Regular Expressions: The documentation page.&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://necromuralist.github.io/Terribilis-Ludum/posts/codewars-not-very-secure/index.html#orgce7a6b6"&gt;str.isalnum: python's built-in types page with the string methods.&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="outline-container-orgfae67a9" class="outline-2"&gt;
+&lt;h2 id="orgfae67a9"&gt;The Problem Statement&lt;/h2&gt;
+&lt;div class="outline-text-2" id="text-orgfae67a9"&gt;
+&lt;blockquote&gt;
+&lt;p&gt;
+In this example you have to validate if a user input string is alphanumeric. The given string is not &lt;code&gt;nil/null/NULL/None&lt;/code&gt;, so you don't have to check that.
+&lt;/p&gt;
+
+&lt;p&gt;
+The string has the following conditions to be alphanumeric:
+&lt;/p&gt;
+
+&lt;ul class="org-ul"&gt;
+&lt;li&gt;At least one character ("" is not valid)&lt;/li&gt;
+&lt;li&gt;Allowed characters are uppercase / lowercase Latin letters and digits from 0 to 9&lt;/li&gt;
+&lt;li&gt;No whitespaces / underscore&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;
+&lt;b&gt;&lt;b&gt;The Function Signature:&lt;/b&gt;&lt;/b&gt;
+&lt;/p&gt;
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;alphanumeric&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;password&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;pass&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div id="outline-container-orgaf9c913" class="outline-2"&gt;
+&lt;h2 id="orgaf9c913"&gt;Testing&lt;/h2&gt;
+&lt;div class="outline-text-2" id="text-orgaf9c913"&gt;
+&lt;p&gt;
+First, some imports.
+&lt;/p&gt;
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# python&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;string&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;ascii_letters&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;digits&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;typing&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Callable&lt;/span&gt;
+
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;random&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;re&lt;/span&gt;
+
+&lt;span class="c1"&gt;# pypy&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;expects&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;expect&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;equal&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div id="outline-container-org0085e68" class="outline-3"&gt;
+&lt;h3 id="org0085e68"&gt;Test Cases&lt;/h3&gt;
+&lt;div class="outline-text-3" id="text-org0085e68"&gt;
+&lt;p&gt;
+These are the cases give by CodeWars - most of them are randomly generated.
+&lt;/p&gt;
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;TEST_CASES&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;
+    &lt;span class="s2"&gt;"hello world_"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"PassW0rd"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"     "&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"__ * __"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"&amp;amp;)))((("&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"43534h56jmTHHF3k"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;""&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"nFmRaqZ9BUupkhe99Og4Bn1uLbsBG5"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"b5rN4"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"6sWJaF3Z9A570RWR2WuqyC"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"IAZN0rQMet0CD06Tf(hTO"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"5s76LJ*8Cq5yn"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;":mL"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"2rvyam"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"UbMbOsy6LKIUeUGoD9PuyaP3zv"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"wztVBnTzqFEq5u0M7%n"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="sd"&gt;"""8DxJH4Segq&lt;/span&gt;
+&lt;span class="sd"&gt;    lqQVlSA10xITOiMt"""&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"Ir7zdFO5keT91eA^iWkX90rVqe0X"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;""&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"t87xDQOL5NzlQI1KH8M02Qo1axNSz"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"6LzkewodgnnYwfe2Pen/a7ope7owboA"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"XkxGwyr"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"8Xj#GSX906q"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"402QCsvUInL50XPOvcd"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"jOX)EcfCbUVEKdBkcM0"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;""&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"jaJeix4OIah39mErxSfLgYX7yI1"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"^HNCy"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"FEXI8JxrMQK2gFVGZnFNI"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"EDcJsDD40=lqSBj3JA"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"FcbS"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"R*ykZ"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"AjtPDT"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"dkPXw31CWSYgiG&amp;lt;EOBoqTX"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"cqVLp9fs98gXl"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"|n37oUuwf5T"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"tho3WBtKubXDwfQZ2Pd"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"8iZc6X4Sk07H2Hcqt31.pwnGy"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"G7zC\etue"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"d"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"V5cNfgK Hj4dEeJ"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"36tNa5ip"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"9ra(zcux"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"N79VJr6L\Dud6jxebOC"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"pk4a0UvRgTDyL"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"rLeZPfihch|HSVmtsYp8IDP0nE"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"sJrK0ME2KlOEWs8OwdUwrtc"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"BZ5YoLxqeSGpn8x1vDJ9AW"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"d:Yy3"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"mLV&amp;amp;I3u3BEiahtE"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"E4WwmoAAeWDD2v4cAH40E2eIoP"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"KeS7PqVNv"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"E953SS2^1BTlDrkVaMRZ2pxji3R"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"7e7w0wn uH7GhK7"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"v91Tlcgo8uOyoXGC5B2"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"rHoMNejW62"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"FvQ;zg4QjtLGincQbgtitRE0x59i"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"atfRWKyYzX#h"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"ryINv[nwOnD6ZA0awajbZG"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"DRzm9wgmqR*tNfTH9ECVuGcp6L"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"a02GE"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"rHLrd8Eg8DtUkelRUR^yLJ0"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"6d520vrKHIhe8G"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"zqnL05D!WOfbnH"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"uIzed|SFyhLpBf72mBKPLy8z"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"MgMg8QzI77zkYMNyojkFEPIW"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"mPe7m5L7t"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"BG	AWuGtQCnHac2wb"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"HPG3mi"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"K	hTcILzx1tU7"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"5&lt;/span&gt;&lt;span class="si"&gt;%u&lt;/span&gt;&lt;span class="s2"&gt;G0LrmjW3bSZR"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"lf2S3sIKgFjzxGnnQCkO7YnARv"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"PwCVGoB"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"6lU]O"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"Jze74"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"DVf/usVMS62kn"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"DXT5ASHQYaVYc9uZ3Jm3ZAw"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"wsOFSPcV,rgba9A4baNNcC"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"uZuRbdTv(N9xjXdNDUye"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"0LSZSmekL0"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"YrAcW1CDSjRwa"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"z9aG3Q9w5R*bt"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"fsBg8NnhhEkhTPz9XsgAyxo0a"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"wfT!o6uYr"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"LvON7"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"YrgexSunN3DMDBtZ9MoXrnhyBonl"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"KvnruYLI0TnXa7rnT"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"XlhrT95PiBjzpm7xeuQXk"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"c00UB1"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"W51WK7BzeF"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"v0r k"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"4J]oT0qdNx"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"&amp;gt;uLYV2YLRqSSvRE"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"z0cP&amp;gt;O6W0xtEyZ2"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"7Td7ZJpsMe6O7dmeA5XgQj"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"zjQHfoqXfIGRsow"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"qv"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"2JnojjTEWNwOJ9)LzL2AY"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s1"&gt;'WEEZuO1"3ggmYRs8Sp2wUqdQXz0'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"LF9NZbe7AYzFIF5IO"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"V9SByoOlc0yUNqdV0"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"pNn"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"q2AUD5KJZ3bKMEDlqgrrLhzX6PtQ"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"`cCTmmb0HOXR"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"flQyxMWDidg"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"8X'51m9UD"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"VYDcIkrLDFA5cDz8mHGp;6x6RqU"&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div id="outline-container-org2f5657d" class="outline-3"&gt;
+&lt;h3 id="org2f5657d"&gt;The Tester&lt;/h3&gt;
+&lt;div class="outline-text-3" id="text-org2f5657d"&gt;
+&lt;p&gt;
+It turns out that, once again, as with the &lt;a href="https://necromuralist.github.io/Terribilis-Ludum/posts/edabit-convert-a-number-to-base-2/index.html"&gt;binary conversion&lt;/a&gt; case from edabit, there is a python built-in that solves this problem (&lt;a href="https://docs.python.org/3/library/stdtypes.html#str.isalnum"&gt;isalnum&lt;/a&gt;). From the python documentation:
+&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;
+Return &lt;code&gt;True&lt;/code&gt; if all characters in the string are alphanumeric and there is at least one character, &lt;code&gt;False&lt;/code&gt; otherwise. A character &lt;i&gt;c&lt;/i&gt; is alphanumeric if one of the following returns &lt;code&gt;True&lt;/code&gt;: &lt;code&gt;c.isalpha()&lt;/code&gt;, &lt;code&gt;c.isdecimal()&lt;/code&gt;, &lt;code&gt;c.isdigit()&lt;/code&gt;, or &lt;code&gt;c.isnumeric()&lt;/code&gt;.
+&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;
+Curiously, there is an &lt;code&gt;isdecimal&lt;/code&gt; method and an &lt;code&gt;isdigit&lt;/code&gt; method. I read the documentation for them and it appears that &lt;code&gt;isdigit&lt;/code&gt; actually encompasses more than the 10 digits of the base-10 system, including something called the &lt;a href="https://en.wikipedia.org/wiki/Kharosthi?useskin=vector"&gt;Kharosthi Numbers&lt;/a&gt; so this function is too permissive, but the test cases they gave don't seem to have any exotic characters so I'm going to assume that it will work as a validator for this problem.
+&lt;/p&gt;
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;tester&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;testee&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Callable&lt;/span&gt;&lt;span class="p"&gt;[[&lt;/span&gt;&lt;span class="nb"&gt;str&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="nb"&gt;bool&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;cases&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;list&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;TEST_CASES&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+           &lt;span class="n"&gt;throw&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;bool&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;True&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="kc"&gt;None&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="sd"&gt;"""Run the testee over the test-cases&lt;/span&gt;
+
+&lt;span class="sd"&gt;    Args:&lt;/span&gt;
+
+&lt;span class="sd"&gt;     - `testee`: function to check if a string is alphanumeric&lt;/span&gt;
+&lt;span class="sd"&gt;     - `cases`: iterable test-cases to check&lt;/span&gt;
+&lt;span class="sd"&gt;     - `throw`: Throw a exception if a case fails (otherwise just print failure)&lt;/span&gt;
+
+&lt;span class="sd"&gt;    Raises:&lt;/span&gt;
+
+&lt;span class="sd"&gt;     AssertionError if any case fails&lt;/span&gt;
+&lt;span class="sd"&gt;    """&lt;/span&gt;
+    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;test_case&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;cases&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="k"&gt;try&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="n"&gt;expect&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;test_case&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;isalnum&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;to&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;equal&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;testee&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;test_case&lt;/span&gt;&lt;span class="p"&gt;)))&lt;/span&gt;
+        &lt;span class="k"&gt;except&lt;/span&gt; &lt;span class="ne"&gt;AssertionError&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="n"&gt;error&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"Failed Test Case: '&lt;/span&gt;&lt;span class="si"&gt;{0}&lt;/span&gt;&lt;span class="s2"&gt;' Expected: &lt;/span&gt;&lt;span class="si"&gt;{1}&lt;/span&gt;&lt;span class="s2"&gt; Actual: &lt;/span&gt;&lt;span class="si"&gt;{2}&lt;/span&gt;&lt;span class="s2"&gt;"&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;format&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+                &lt;span class="n"&gt;test_case&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;test_case&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;isalnum&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt; &lt;span class="n"&gt;testee&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;test_case&lt;/span&gt;&lt;span class="p"&gt;)))&lt;/span&gt;
+            &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;throw&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+                &lt;span class="k"&gt;raise&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div id="outline-container-orgab2e29b" class="outline-2"&gt;
+&lt;h2 id="orgab2e29b"&gt;A Solution&lt;/h2&gt;
+&lt;div class="outline-text-2" id="text-orgab2e29b"&gt;
+&lt;p&gt;
+The problem-page on CodeWars shows a "RegularExpressions" tag so I'm going to assume that that's the way to solve it. My first thought was to use the &lt;code&gt;\w&lt;/code&gt; special character, but the documentation says:
+&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;
+Matches Unicode word characters; this includes alphanumeric characters (as defined by &lt;code&gt;str.isalnum()&lt;/code&gt;) as well as the underscore (&lt;code&gt;_&lt;/code&gt;). If the ASCII flag is used, only &lt;code&gt;[a-zA-Z0-9_]&lt;/code&gt; is matched.
+&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;
+The description says that it's equivalent to &lt;code&gt;[a-zA-Z0-9_]&lt;/code&gt;, so we can't use it (we don't want underscores), but if we use the same character ranges and leave out the underscore, it should work.
+&lt;/p&gt;
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;ALPHANUMERIC&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;"[a-zA-Z0-9]"&lt;/span&gt;
+&lt;span class="n"&gt;ONE_OR_MORE&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;"+"&lt;/span&gt;
+
+&lt;span class="n"&gt;PATTERN_ONE&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;re&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;compile&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ALPHANUMERIC&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;ONE_OR_MORE&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;submitted&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;password&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;str&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="nb"&gt;bool&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="sd"&gt;"""Check if the input is alphanumeric&lt;/span&gt;
+
+&lt;span class="sd"&gt;    Args:&lt;/span&gt;
+
+&lt;span class="sd"&gt;     - password: string to check&lt;/span&gt;
+
+&lt;span class="sd"&gt;    Returns:&lt;/span&gt;
+
+&lt;span class="sd"&gt;      True if alphanumeric False otherwise&lt;/span&gt;
+&lt;span class="sd"&gt;    """&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;PATTERN_ONE&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;fullmatch&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;password&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="ow"&gt;is&lt;/span&gt; &lt;span class="ow"&gt;not&lt;/span&gt; &lt;span class="kc"&gt;None&lt;/span&gt;
+
+&lt;span class="n"&gt;tester&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;submitted&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;
+As a check, I'll see what happens if I used the &lt;code&gt;\w&lt;/code&gt; instead.
+&lt;/p&gt;
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;WITH_UNDERSCORES&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;re&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;compile&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"\w"&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;ONE_OR_MORE&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;allows_underscores&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;password&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;str&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="nb"&gt;bool&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="sd"&gt;"""Checks if the password has only alphanumeric or underscore characters&lt;/span&gt;
+
+&lt;span class="sd"&gt;    Args:&lt;/span&gt;
+
+&lt;span class="sd"&gt;      - password: input to check&lt;/span&gt;
+
+&lt;span class="sd"&gt;    Returns:&lt;/span&gt;
+
+&lt;span class="sd"&gt;     - True if valid&lt;/span&gt;
+&lt;span class="sd"&gt;    """&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;WITH_UNDERSCORES&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;fullmatch&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;password&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="ow"&gt;is&lt;/span&gt; &lt;span class="ow"&gt;not&lt;/span&gt; &lt;span class="kc"&gt;None&lt;/span&gt;
+
+&lt;span class="n"&gt;JUST_UNDERSCORES&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;"____"&lt;/span&gt;
+&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;JUST_UNDERSCORES&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;isalnum&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;
+&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;allows_underscores&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;JUST_UNDERSCORES&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+
+&lt;span class="n"&gt;tester&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;allows_underscores&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+&lt;pre class="example"&gt;
+False
+True
+&lt;/pre&gt;
+
+
+&lt;p&gt;
+So, that was a surprise. Why did &lt;code&gt;allows_underscores&lt;/code&gt; pass the tests? If you look back at the test-cases you'll see that none of them have just letters, digits, and underscores, if there's an underscore then there's also white-space or some other invalid character. Seems like there's a hole in their testing.
+&lt;/p&gt;
+
+&lt;p&gt;
+Let's add in a couple of cases that should fail.
+&lt;/p&gt;
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;EXTRA&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;""&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;join&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;random&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;choices&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ascii_letters&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;digits&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s2"&gt;"_"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;k&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;25&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s2"&gt;"_"&lt;/span&gt;
+&lt;span class="n"&gt;TEST_CASES_2&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;TEST_CASES&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;EXTRA&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;JUST_UNDERSCORES&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+
+&lt;span class="n"&gt;tester&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;allows_underscores&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;TEST_CASES_2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;throw&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;False&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;
+That's better.
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div id="outline-container-orgd0e63e8" class="outline-2"&gt;
+&lt;h2 id="orgd0e63e8"&gt;The End&lt;/h2&gt;
+&lt;div class="outline-text-2" id="text-orgd0e63e8"&gt;
+&lt;p&gt;
+So, another not so exciting problem, but I did learn that there's a &lt;code&gt;fullmatch&lt;/code&gt; function now, spurring me to look up what the &lt;code&gt;match&lt;/code&gt; and &lt;code&gt;search&lt;/code&gt; methods do again, which was useful. As a note to my future self, &lt;code&gt;match&lt;/code&gt; and &lt;code&gt;fullmatch&lt;/code&gt; are essentially shortcuts so you don't have to use the beginning and ending of line characters. That is to say, &lt;code&gt;search("^[a-z]+")&lt;/code&gt; is the equivalent of &lt;code&gt;match("[a-z]+")&lt;/code&gt; and &lt;code&gt;search("^[a-z]+$")&lt;/code&gt; is the equivalent of &lt;code&gt;fullmatch("[a-z]+")"&lt;/code&gt;. There might be other differences, but for simple cases like this that'll do.
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div id="outline-container-org283f782" class="outline-2"&gt;
+&lt;h2 id="org283f782"&gt;Links&lt;/h2&gt;
+&lt;div class="outline-text-2" id="text-org283f782"&gt;
+&lt;/div&gt;
+&lt;div id="outline-container-org73fac69" class="outline-3"&gt;
+&lt;h3 id="org73fac69"&gt;&lt;a href="https://www.codewars.com/kata/526dbd6c8c0eb53254000110/train/python"&gt;Not-Very-Secure&lt;/a&gt;: The CodeWars problem page.&lt;/h3&gt;
+&lt;/div&gt;
+&lt;div id="outline-container-orgfb3dc79" class="outline-3"&gt;
+&lt;h3 id="orgfb3dc79"&gt;&lt;a href="https://stackoverflow.com/a/58774098"&gt;StackOverflow&lt;/a&gt;: Answer explaining the difference between &lt;code&gt;match&lt;/code&gt;, &lt;code&gt;search&lt;/code&gt;, and &lt;code&gt;fullmatch&lt;/code&gt;.&lt;/h3&gt;
+&lt;/div&gt;
+&lt;div id="outline-container-org9a0a2ef" class="outline-3"&gt;
+&lt;h3 id="org9a0a2ef"&gt;&lt;a href="https://docs.python.org/3/library/re.html"&gt;Python's Regular Expressions&lt;/a&gt;: The documentation page.&lt;/h3&gt;
+&lt;/div&gt;
+&lt;div id="outline-container-orgce7a6b6" class="outline-3"&gt;
+&lt;h3 id="orgce7a6b6"&gt;&lt;a href="https://docs.python.org/3/library/stdtypes.html#str.isalnum"&gt;str.isalnum&lt;/a&gt;: python's built-in types page with the string methods.&lt;/h3&gt;
+&lt;/div&gt;
+&lt;/div&gt;</description><guid>https://necromuralist.github.io/Terribilis-Ludum/posts/codewars-not-very-secure/index.html</guid><pubDate>Tue, 05 Dec 2023 22:31:16 GMT</pubDate></item><item><title>Edabit: Convert a Number to Base-2</title><link>https://necromuralist.github.io/Terribilis-Ludum/posts/edabit-convert-a-number-to-base-2/index.html</link><dc:creator>The Cloistered Monkey</dc:creator><description>&lt;div id="table-of-contents" role="doc-toc"&gt;
 &lt;h2&gt;Table of Contents&lt;/h2&gt;
 &lt;div id="text-table-of-contents" role="doc-toc"&gt;
 &lt;ul&gt;

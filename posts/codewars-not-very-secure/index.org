@@ -1,0 +1,292 @@
+#+BEGIN_COMMENT
+.. title: CodeWars: Not Very Secure
+.. slug: codewars-not-very-secure
+.. date: 2023-12-05 17:31:16 UTC-05:00
+.. tags: 
+.. category: 
+.. link: 
+.. description: 
+.. type: text
+.. status: 
+.. updated: 
+
+#+END_COMMENT
+#+OPTIONS: ^:{}
+#+TOC: headlines 2
+#+PROPERTY: header-args :session ~/.local/share/jupyter/runtime/kernel-36ca607e-e6f8-427c-ad52-b03e7fd2c679-ssh.json
+#+BEGIN_SRC python :results none :exports none
+%load_ext autoreload
+%autoreload 2
+#+END_SRC
+* The Problem Statement
+
+#+begin_quote
+In this example you have to validate if a user input string is alphanumeric. The given string is not ~nil/null/NULL/None~, so you don't have to check that.
+
+The string has the following conditions to be alphanumeric:
+
+   - At least one character ("" is not valid)
+   - Allowed characters are uppercase / lowercase Latin letters and digits from 0 to 9
+   - No whitespaces / underscore
+#+end_quote
+
+**The Function Signature:**
+
+#+begin_src python
+def alphanumeric(password):
+    pass
+#+end_src
+
+* Testing
+First, some imports.
+
+#+begin_src python :results none
+# python
+from string import ascii_letters, digits
+from typing import Callable
+
+import random
+import re
+
+# pypy
+from expects import expect, equal
+#+end_src
+
+** Test Cases
+These are the cases give by CodeWars - most of them are randomly generated.
+
+#+begin_src python :results none
+TEST_CASES = [
+    "hello world_",
+    "PassW0rd",
+    "     ",
+    "__ * __",
+    "&)))(((",
+    "43534h56jmTHHF3k",
+    "",
+    "nFmRaqZ9BUupkhe99Og4Bn1uLbsBG5",
+    "b5rN4",
+    "6sWJaF3Z9A570RWR2WuqyC",
+    "IAZN0rQMet0CD06Tf(hTO",
+    "5s76LJ*8Cq5yn",
+    ":mL",
+    "2rvyam",
+    "UbMbOsy6LKIUeUGoD9PuyaP3zv",
+    "wztVBnTzqFEq5u0M7%n",
+    """8DxJH4Segq
+    lqQVlSA10xITOiMt""",
+    "Ir7zdFO5keT91eA^iWkX90rVqe0X",
+    "",
+    "t87xDQOL5NzlQI1KH8M02Qo1axNSz",
+    "6LzkewodgnnYwfe2Pen/a7ope7owboA",
+    "XkxGwyr",
+    "8Xj#GSX906q",
+    "402QCsvUInL50XPOvcd",
+    "jOX)EcfCbUVEKdBkcM0",
+    "",
+    "jaJeix4OIah39mErxSfLgYX7yI1",
+    "^HNCy",
+    "FEXI8JxrMQK2gFVGZnFNI",
+    "EDcJsDD40=lqSBj3JA",
+    "FcbS",
+    "R*ykZ",
+    "AjtPDT",
+    "dkPXw31CWSYgiG<EOBoqTX",
+    "cqVLp9fs98gXl",
+    "|n37oUuwf5T",
+    "tho3WBtKubXDwfQZ2Pd",
+    "8iZc6X4Sk07H2Hcqt31.pwnGy",
+    "G7zC\etue",
+    "d",
+    "V5cNfgK Hj4dEeJ",
+    "36tNa5ip",
+    "9ra(zcux",
+    "N79VJr6L\Dud6jxebOC",
+    "pk4a0UvRgTDyL",
+    "rLeZPfihch|HSVmtsYp8IDP0nE",
+    "sJrK0ME2KlOEWs8OwdUwrtc",
+    "BZ5YoLxqeSGpn8x1vDJ9AW",
+    "d:Yy3",
+    "mLV&I3u3BEiahtE",
+    "E4WwmoAAeWDD2v4cAH40E2eIoP",
+    "KeS7PqVNv",
+    "E953SS2^1BTlDrkVaMRZ2pxji3R",
+    "7e7w0wn uH7GhK7",
+    "v91Tlcgo8uOyoXGC5B2",
+    "rHoMNejW62",
+    "FvQ;zg4QjtLGincQbgtitRE0x59i",
+    "atfRWKyYzX#h",
+    "ryINv[nwOnD6ZA0awajbZG",
+    "DRzm9wgmqR*tNfTH9ECVuGcp6L",
+    "a02GE",
+    "rHLrd8Eg8DtUkelRUR^yLJ0",
+    "6d520vrKHIhe8G",
+    "zqnL05D!WOfbnH",
+    "uIzed|SFyhLpBf72mBKPLy8z",
+    "MgMg8QzI77zkYMNyojkFEPIW",
+    "mPe7m5L7t",
+    "BG	AWuGtQCnHac2wb",
+    "HPG3mi",
+    "K	hTcILzx1tU7",
+    "5%uG0LrmjW3bSZR",
+    "lf2S3sIKgFjzxGnnQCkO7YnARv",
+    "PwCVGoB",
+    "6lU]O",
+    "Jze74",
+    "DVf/usVMS62kn",
+    "DXT5ASHQYaVYc9uZ3Jm3ZAw",
+    "wsOFSPcV,rgba9A4baNNcC",
+    "uZuRbdTv(N9xjXdNDUye",
+    "0LSZSmekL0",
+    "YrAcW1CDSjRwa",
+    "z9aG3Q9w5R*bt",
+    "fsBg8NnhhEkhTPz9XsgAyxo0a",
+    "wfT!o6uYr",
+    "LvON7",
+    "YrgexSunN3DMDBtZ9MoXrnhyBonl",
+    "KvnruYLI0TnXa7rnT",
+    "XlhrT95PiBjzpm7xeuQXk",
+    "c00UB1",
+    "W51WK7BzeF",
+    "v0r k",
+    "4J]oT0qdNx",
+    ">uLYV2YLRqSSvRE",
+    "z0cP>O6W0xtEyZ2",
+    "7Td7ZJpsMe6O7dmeA5XgQj",
+    "zjQHfoqXfIGRsow",
+    "qv",
+    "2JnojjTEWNwOJ9)LzL2AY",
+    'WEEZuO1"3ggmYRs8Sp2wUqdQXz0',
+    "LF9NZbe7AYzFIF5IO",
+    "V9SByoOlc0yUNqdV0",
+    "pNn",
+    "q2AUD5KJZ3bKMEDlqgrrLhzX6PtQ",
+    "`cCTmmb0HOXR",
+    "flQyxMWDidg",
+    "8X'51m9UD",
+    "VYDcIkrLDFA5cDz8mHGp;6x6RqU"]
+#+end_src
+
+** The Tester
+
+It turns out that, once again, as with the {{% lancelot "binary conversion" %}}edabit-convert-a-number-to-base-2{{% /lancelot %}} case from edabit, there is a python built-in that solves this problem ([[https://docs.python.org/3/library/stdtypes.html#str.isalnum][isalnum]]). From the python documentation:
+
+#+begin_quote
+Return ~True~ if all characters in the string are alphanumeric and there is at least one character, ~False~ otherwise. A character /c/ is alphanumeric if one of the following returns ~True~: ~c.isalpha()~, ~c.isdecimal()~, ~c.isdigit()~, or ~c.isnumeric()~.
+#+end_quote
+
+Curiously, there is an ~isdecimal~ method and an ~isdigit~ method. I read the documentation for them and it appears that ~isdigit~ actually encompasses more than the 10 digits of the base-10 system, including something called the [[https://en.wikipedia.org/wiki/Kharosthi?useskin=vector][Kharosthi Numbers]] so this function is too permissive, but the test cases they gave don't seem to have any exotic characters so I'm going to assume that it will work as a validator for this problem.
+
+#+begin_src python :results none
+def tester(testee: Callable[[str], bool], cases: list=TEST_CASES,
+           throw: bool=True) -> None:
+    """Run the testee over the test-cases
+
+    Args:
+
+     - `testee`: function to check if a string is alphanumeric
+     - `cases`: iterable test-cases to check
+     - `throw`: Throw a exception if a case fails (otherwise just print failure)
+
+    Raises:
+
+     AssertionError if any case fails
+    """
+    for test_case in cases:
+        try:
+            expect(test_case.isalnum()).to(equal(testee(test_case)))
+        except AssertionError as error:
+            print("Failed Test Case: '{0}' Expected: {1} Actual: {2}".format(
+                test_case, test_case.isalnum(), testee(test_case)))
+            if throw:
+                raise
+    return
+#+end_src
+
+* A Solution
+
+The problem-page on CodeWars shows a "RegularExpressions" tag so I'm going to assume that that's the way to solve it. My first thought was to use the ~\w~ special character, but the documentation says:
+
+#+begin_quote
+Matches Unicode word characters; this includes alphanumeric characters (as defined by ~str.isalnum()~) as well as the underscore (~_~). If the ASCII flag is used, only ~[a-zA-Z0-9_]~ is matched.
+#+end_quote
+
+The description says that it's equivalent to ~[a-zA-Z0-9_]~, so we can't use it (we don't want underscores), but if we use the same character ranges and leave out the underscore, it should work.
+
+#+begin_src python :results none
+ALPHANUMERIC = "[a-zA-Z0-9]"
+ONE_OR_MORE = "+"
+
+PATTERN_ONE = re.compile(ALPHANUMERIC + ONE_OR_MORE)
+
+def submitted(password: str) -> bool:
+    """Check if the input is alphanumeric
+
+    Args:
+
+     - password: string to check
+
+    Returns:
+
+      True if alphanumeric False otherwise
+    """
+    return PATTERN_ONE.fullmatch(password) is not None
+
+tester(submitted)
+#+end_src
+
+As a check, I'll see what happens if I used the ~\w~ instead.
+
+#+begin_src python :results output :exports both
+WITH_UNDERSCORES = re.compile("\w" + ONE_OR_MORE)
+
+def allows_underscores(password: str) -> bool:
+    """Checks if the password has only alphanumeric or underscore characters
+
+    Args:
+
+      - password: input to check
+
+    Returns:
+
+     - True if valid
+    """
+    return WITH_UNDERSCORES.fullmatch(password) is not None
+
+JUST_UNDERSCORES = "____"
+print(JUST_UNDERSCORES.isalnum())
+print(allows_underscores(JUST_UNDERSCORES))
+
+tester(allows_underscores)
+#+end_src
+
+#+RESULTS:
+: False
+: True
+
+So, that was a surprise. Why did ~allows_underscores~ pass the tests? If you look back at the test-cases you'll see that none of them have just letters, digits, and underscores, if there's an underscore then there's also white-space or some other invalid character. Seems like there's a hole in their testing.
+
+Let's add in a couple of cases that should fail.
+
+#+begin_src python 
+EXTRA = "".join(random.choices(ascii_letters + digits + "_", k=25)) + "_"
+TEST_CASES_2 = TEST_CASES + [EXTRA, JUST_UNDERSCORES]
+
+tester(allows_underscores, TEST_CASES_2, throw=False)
+#+end_src
+
+#+RESULTS:
+: Failed Test Case: 'Z43gn97HOIeOBS2oivbna1tVW_' Expected: False Actual: True
+: Failed Test Case: '____' Expected: False Actual: True
+
+That's better.
+
+* The End
+
+So, another not so exciting problem, but I did learn that there's a ~fullmatch~ function now, spurring me to look up what the ~match~ and ~search~ methods do again, which was useful. As a note to my future self, ~match~ and ~fullmatch~ are essentially shortcuts so you don't have to use the beginning and ending of line characters. That is to say, ~search("^[a-z]+")~ is the equivalent of ~match("[a-z]+")~ and ~search("^[a-z]+$")~ is the equivalent of ~fullmatch("[a-z]+")"~. There might be other differences, but for simple cases like this that'll do.
+
+* Links
+** [[https://www.codewars.com/kata/526dbd6c8c0eb53254000110/train/python][Not-Very-Secure]]: The CodeWars problem page.
+** [[https://stackoverflow.com/a/58774098][StackOverflow]]: Answer explaining the difference between ~match~, ~search~, and ~fullmatch~.
+** [[https://docs.python.org/3/library/re.html][Python's Regular Expressions]]: The documentation page.
+** [[https://docs.python.org/3/library/stdtypes.html#str.isalnum][str.isalnum]]: python's built-in types page with the string methods.
